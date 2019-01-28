@@ -1,5 +1,6 @@
 var css = require('sheetify')
 var choo = require('choo')
+var root = require('window-or-global')
 
 css('tachyons')
 
@@ -10,7 +11,11 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(require('choo-service-worker')())
 }
 
-app.use(require('./store'))
+app.use((state, emitter) => {
+  emitter.on('DOMContentLoaded', function () {
+    root.emitter = emitter
+  })
+})
 
 app.route('/', require('./views/main'))
 app.route('/about', require('./views/about'))

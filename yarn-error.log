@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js add document-ready
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js add choo-reload
 
 PATH: 
   /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin:/usr/local/pgsql/bin:/usr/local/opt/mysql@5.7/bin
@@ -30,7 +30,9 @@ npm manifest:
       "bootstrap": "^4.2.1",
       "choo": "^6.13.1",
       "choo-service-worker": "^2.4.0",
+      "document-ready": "^2.0.2",
       "sheetify": "^7.3.3",
+      "superagent": "^4.1.0",
       "tachyons": "^4.11.1",
       "window-or-global": "^1.0.1",
       "yo-yo": "^1.4.1"

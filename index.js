@@ -12,7 +12,8 @@ if (process.env.NODE_ENV !== 'production') {
 } else {
   app.use(require('choo-service-worker')())
 }
-
+app.use(require('choo-asyncify'))
+app.use(require('choo-reload')())
 app.use((state, emitter) => {
   state.global_attr1 = 'global_attr1'
   root.emitter = emitter

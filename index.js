@@ -3,6 +3,7 @@ var choo = require('choo')
 var root = require('window-or-global')
 
 css('tachyons')
+css('bootstrap')
 
 var app = choo()
 
@@ -13,13 +14,13 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 app.use((state, emitter) => {
-  state.aaaaaaaaa = 1111111111111111111
+  state.global_attr1 = 'global_attr1'
   root.emitter = emitter
   emitter.on('DOMContentLoaded', function () {
   })
 })
 
-app.route('/', require('./views/main'))
+app.route('/', require('./views/home'))
 app.route('/about', require('./views/about'))
 app.route('/*', require('./views/404'))
 

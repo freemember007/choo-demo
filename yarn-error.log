@@ -1,0 +1,62 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js add document-ready
+
+PATH: 
+  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin:/usr/local/pgsql/bin:/usr/local/opt/mysql@5.7/bin
+
+Yarn version: 
+  1.5.1
+
+Node version: 
+  9.1.0
+
+Platform: 
+  darwin x64
+
+npm manifest: 
+  {
+    "name": "choo-demo",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+      "build": "bankai build index.js",
+      "create": "choo-scaffold",
+      "inspect": "bankai inspect index.js",
+      "start": "bankai start index.js",
+      "test": "standard && npm run test-deps",
+      "test-deps": "dependency-check . && dependency-check . --extra --no-dev -i tachyons"
+    },
+    "dependencies": {
+      "bootstrap": "^4.2.1",
+      "choo": "^6.13.1",
+      "choo-service-worker": "^2.4.0",
+      "sheetify": "^7.3.3",
+      "tachyons": "^4.11.1",
+      "window-or-global": "^1.0.1",
+      "yo-yo": "^1.4.1"
+    },
+    "devDependencies": {
+      "bankai": "^9.15.0",
+      "choo-devtools": "^2.5.1",
+      "choo-scaffold": "^1.2.0",
+      "dependency-check": "^3.3.0",
+      "standard": "^12.0.1"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: Found incompatible module
+      at new MessageError (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:186:110)
+      at checkOne (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:62444:11)
+      at Object.check (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:62463:5)
+      at /usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:22803:73
+      at Generator.next (<anonymous>)
+      at step (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:98:30)
+      at /usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:109:13
+      at <anonymous>

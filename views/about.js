@@ -1,33 +1,38 @@
 var html = require('choo/html')
+var ready = require('document-ready')
 
 function a (state) {
-  state.ccc = [1,2]
+  state.about_attr1 = 'attr1'
   return html`
-    <div>
-        ${state.ccc}
-        ${state.aaaaaaaaa}
-        ${state.totalClicks}
-
-    aaa
-    </div>
+    <section class="mw6 w-50-m w-third-l pa3">
+      <div> 
+        ${state.about_attr1}
+      </div>
+      <a class="" href="/">回首页</a>
+    </section>
   `
 }
 function b (state) {
+  state.about_attr2 = 'attr2'
   return html`
-    <div>
-    bbb
-    </div>
+    <section class="mw6 w-50-m w-third-l pa3">
+      ${state.about_attr2}
+    </section>
   `
 }
+
 function view (state) {
-  state.about = 999
+  // 类似mounted事件
+  ready(()=> {
+    console.log('about mounted!') 
+  })
+
   return html`
     <body>
-    ${state.about}
-    ${state.query.id}
-    ${a(state)}
-    ${b(state)}
-    aaa
+      <main class="pa3 cf center">
+        ${a(state)}
+        ${b(state)}
+      </main>
     </body>
   `
 }

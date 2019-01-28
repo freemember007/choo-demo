@@ -16,8 +16,9 @@ function aaa (state) {
           <h2>4.</h2>
 
           <p>
-            So far we've provided you with one base view, <a
-            href="/oh-no">one fallback view</a>, and one store. This serves
+            So far we've provided you with one base view, 
+            <a href="/oh-no">one fallback view</a>,
+             and one store. This serves
             as an example. A place to start from. It's your project now, so
             go ahead and delete them once you know how they work.
           </p>

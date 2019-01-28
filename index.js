@@ -5,6 +5,7 @@ var root = require('window-or-global')
 css('tachyons')
 
 var app = choo()
+
 if (process.env.NODE_ENV !== 'production') {
   app.use(require('choo-devtools')())
 } else {
@@ -12,8 +13,9 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 app.use((state, emitter) => {
+  state.aaaaaaaaa = 1111111111111111111
+  root.emitter = emitter
   emitter.on('DOMContentLoaded', function () {
-    root.emitter = emitter
   })
 })
 

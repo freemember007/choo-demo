@@ -1,15 +1,16 @@
 var html = require('choo/html')
 
-var TITLE = 'choo-demo - main2'
-
-module.exports = view
 
 function aaa (state) {
 
-  if (state.title !== TITLE) emitter.emit(state.events.DOMTITLECHANGE, TITLE)
+  state.totalClicks = state.totalClicks || 100
+
+  function handleClick () {
+    state.totalClicks += 1
+    emitter.emit(state.events.RENDER) 
+  }
 
   return html`
-
 
         <section class="fl mw6 w-50-m w-third-l pa3">
           <h2>4.</h2>
@@ -31,16 +32,13 @@ function aaa (state) {
           <br><br>
         </section>
   `
-  function handleClick () {
-    state.totalClicks += 1
-    emitter.emit(state.events.RENDER)
-  }
 
 }
 
+
 function view (state) {
 
-  state.totalClicks = state.totalClicks || 100
+  var TITLE = 'choo-demo - main2'
 
   if (state.title !== TITLE) emitter.emit(state.events.DOMTITLECHANGE, TITLE)
 
@@ -54,3 +52,4 @@ function view (state) {
   `
 }
 
+module.exports = view

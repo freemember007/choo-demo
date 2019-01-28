@@ -1,11 +1,11 @@
 var html = require('choo/html')
 
-var TITLE = 'choo-demo - route not found'
-
-module.exports = view
 
 function view (state, emit) {
+
+  var TITLE = 'choo-demo - route not found'
   if (state.title !== TITLE) emit(state.events.DOMTITLECHANGE, TITLE)
+
   return html`
     <body class="sans-serif pa3">
       <h1>Route not found.</h1>
@@ -13,3 +13,5 @@ function view (state, emit) {
     </body>
   `
 }
+
+module.exports = view

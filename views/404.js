@@ -1,10 +1,10 @@
 var html = require('choo/html')
 
 
-function view (state, emit) {
+function view (state) {
 
   var TITLE = 'choo-demo - route not found'
-  if (state.title !== TITLE) emit(state.events.DOMTITLECHANGE, TITLE)
+  if (state.title !== TITLE) emitter.emit(state.events.DOMTITLECHANGE, TITLE)
 
   return html`
     <body class="sans-serif pa3">

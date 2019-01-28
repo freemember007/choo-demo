@@ -1,7 +1,7 @@
 var html = require('choo/html')
 
 
-function a (state, emit) {
+function a (state) {
   state.ccc = [1,2]
   return html`
     <div>
@@ -25,8 +25,8 @@ function view (state, emit) {
     <body>
     ${state.about}
     ${state.query.id}
-    ${a(state, emit)}
-    ${b(state, emit)}
+    ${a(state)}
+    ${b(state)}
     aaa
     </body>
   `

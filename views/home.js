@@ -12,15 +12,15 @@ const pageState = {
 function A(globalState) {
 
   typeof window !== 'undefined' && ready(()=> {
-    getText()
+    getUsers()
   })
 
-  function getText(){
+  function getUsers(){
     agent.get('https://localhost:8080/about')
      .then(function(res){
-        const _user = res.text.slice(0,100)
-        pageState.users != _user
-        && (pageState.users = _user)
+        const _users = res.text.slice(0,100)
+        pageState.users != _users
+        && (pageState.users = _users) //为对象的情况下要深度比较
         && emitter.emit(globalState.events.RENDER) // 不完美，其他小组件更新时每次都会重新请求，要引入async
       })
   }

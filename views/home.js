@@ -9,7 +9,7 @@ const pageState = {
 }
 
 // 元件A
-function A(globalState) {
+function A() {
 
   typeof window !== 'undefined' && ready(()=> {
     getUsers()
@@ -21,13 +21,13 @@ function A(globalState) {
         const _users = res.text.slice(0,100)
         pageState.users != _users
         && (pageState.users = _users) //为对象的情况下要深度比较
-        && emitter.emit(globalState.events.RENDER) // 不完美，其他小组件更新时每次都会重新请求，要引入async
+        && emitter.emit('render') // 不完美，其他小组件更新时每次都会重新请求，要引入async
       })
   }
 
   function handleClick () {
     pageState.count += 1
-    emitter.emit(globalState.events.RENDER) 
+    emitter.emit('render') 
   }
 
   return html`
@@ -61,7 +61,7 @@ function View (globalState) {
   return html`
     <body class="code lh-copy">
       <main class="pa3 cf center">
-        ${A(globalState)}
+        ${A()}
       </main>
     </body>
   `

@@ -8,7 +8,7 @@ function a (state) {
       <div> 
         ${state.about_attr1}
       </div>
-      <a class="" href="/">回首页</a>
+      <a class="" href="/">回首页 ${state.n}</a>
     </section>
   `
 }

@@ -1,6 +1,7 @@
 var css = require('sheetify')
 var choo = require('choo')
 var root = require('window-or-global')
+// const async = require('choo-async') //es6
 
 css('tachyons')
 css('bootstrap')
@@ -21,7 +22,8 @@ app.use((state, emitter) => {
   })
 })
 
-app.route('/', require('./views/home'))
+app.use(require('./views/home').store)
+app.route('/', require('./views/home').view)
 app.route('/about', require('./views/about'))
 app.route('/*', require('./views/404'))
 

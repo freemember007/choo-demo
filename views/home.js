@@ -11,7 +11,7 @@ function a (state) {
      .then(function(res){
         // console.log(res.text)
         state.home_text = res.text
-        emitter.emit(state.events.RENDER) 
+        // emitter.emit(state.events.RENDER) // 会导致循环更新
       })
   }
 
@@ -50,10 +50,15 @@ function view (state) {
   return html`
     <body class="code lh-copy">
       <main class="pa3 cf center">
-        ${a(state)}
+        ${a(state)} ${state.n}
       </main>
     </body>
   `
 }
-
-module.exports = view
+store.storeName = 'home'
+function store (state, emitter) {
+  state.n = 'N'
+  emitter.on('DOMContentLoaded', function () {
+  })
+}
+module.exports = {view, store}

@@ -38,7 +38,7 @@ function A(globalState) {
 
       <p>Number of clicks stored: ${pageState.count}</p>
 
-      <button class="dim ph3 ba bw1 pv2 b--black pointer bg-white"
+      <button class="btn btn-primary dim ph3 ba bw1 pv2 b--black pointer bg-white"
         onclick=${handleClick}>
         Emit a click event
       </button>

@@ -4,7 +4,7 @@ const root = require('window-or-global')
 // const async = require('choo-async') //es6
 
 css('tachyons')
-css('bootstrap')
+css('./node_modules/bootstrap/dist/css/bootstrap.min.css')
 
 const app = choo()
 

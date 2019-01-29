@@ -1,6 +1,5 @@
 /**
  * 简单的前端数据验证器
- * @todo: 写成构造函数+数据字典
  */
 
 const equal = (input1, input2, msg) => {
@@ -31,4 +30,4 @@ const validator = {
   // ...
 };
 
-export default validator
+module.exports = validator

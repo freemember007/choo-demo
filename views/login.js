@@ -2,7 +2,7 @@ const html = require('choo/html')
 const ready = require('document-ready')
 const request = require('superagent')
 const form2json = require('htmlform2json').default
-const validator = require('../utils/validator').default
+const validator = require('../utils/validator')
 
 
 // 头

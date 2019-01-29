@@ -13,17 +13,15 @@ if (process.env.NODE_ENV !== 'production') {
 } else {
   app.use(require('choo-service-worker')())
 }
-app.use(require('choo-asyncify'))
-app.use(require('choo-reload')())
+
 app.use((state, emitter) => {
-  state.global_attr1 = 'global_attr1'
-  root.emitter = emitter
+  state.global_attr1 = 'global_attr1' //全局状态
   emitter.on('DOMContentLoaded', function () {
   })
 })
+root.emitter = app.emitter //@todo: 各页面自己require
 
-app.use(require('./views/home').store)
-app.route('/', require('./views/home').view)
+app.route('/', require('./views/home'))
 app.route('/about', require('./views/about'))
 app.route('/*', require('./views/404'))
 

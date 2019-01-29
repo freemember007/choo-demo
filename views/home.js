@@ -2,31 +2,35 @@ const html = require('choo/html')
 const ready = require('document-ready')
 const agent = require('superagent')
 
-function a (state) {
-  state.home_count = state.home_count || 100
+// state
+const pageState = {
+  count: 0,
+  users: [],
+}
+
+// 元件A
+function A(globalState) {
 
   function getText(){
-    console.log('onload')
     agent.get('https://localhost:8080/about')
      .then(function(res){
-        // console.log(res.text)
-        state.home_text = res.text
-        // emitter.emit(state.events.RENDER) // 会导致循环更新
+        pageState.users = res.text.slice(0,100)
+        // emitter.emit(globalState.events.RENDER) // 会导致循环更新
       })
   }
 
   function handleClick () {
-    state.home_count += 1
-    emitter.emit(state.events.RENDER) 
+    pageState.count += 1
+    emitter.emit(globalState.events.RENDER) 
   }
 
   return html`
     <section onload=${getText()} id="a" class="fl mw6 w-50-m w-third-l pa3">
       <h2>4.</h2>
-      <p>${state.home_text}</p>
+      <p>${pageState.users}</p>
       <a href="/about">关于我们</a>
 
-      <p>Number of clicks stored: ${state.home_count}</p>
+      <p>Number of clicks stored: ${pageState.count}</p>
 
       <button class="dim ph3 ba bw1 pv2 b--black pointer bg-white"
         onclick=${handleClick}>
@@ -38,27 +42,23 @@ function a (state) {
   `
 }
 
-function view (state) {
+// 主View
+function View (globalState) {
   // 类似mounted事件
   window && ready(()=> {
     console.log('home mounted!') 
   })
 
   var TITLE = 'choo-demo - main2'
-  if (state.title !== TITLE) emitter.emit(state.events.DOMTITLECHANGE, TITLE)
+  if (globalState.title !== TITLE) emitter.emit(globalState.events.DOMTITLECHANGE, TITLE)
 
   return html`
     <body class="code lh-copy">
       <main class="pa3 cf center">
-        ${a(state)} ${state.n}
+        ${A(globalState)}
       </main>
     </body>
   `
 }
-store.storeName = 'home'
-function store (state, emitter) {
-  state.n = 'N'
-  emitter.on('DOMContentLoaded', function () {
-  })
-}
-module.exports = {view, store}
+
+module.exports = View

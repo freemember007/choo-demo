@@ -5,17 +5,23 @@ const agent = require('superagent')
 // state
 const pageState = {
   count: 0,
-  users: [],
+  users: '',
 }
 
 // 元件A
 function A(globalState) {
 
+  typeof window !== 'undefined' && ready(()=> {
+    getText()
+  })
+
   function getText(){
     agent.get('https://localhost:8080/about')
      .then(function(res){
-        pageState.users = res.text.slice(0,100)
-        // emitter.emit(globalState.events.RENDER) // 会导致循环更新
+        const _user = res.text.slice(0,100)
+        pageState.users != _user
+        && (pageState.users = _user)
+        && emitter.emit(globalState.events.RENDER) // 不完美，其他小组件更新时每次都会重新请求，要引入async
       })
   }
 
@@ -25,7 +31,7 @@ function A(globalState) {
   }
 
   return html`
-    <section onload=${getText()} id="a" class="fl mw6 w-50-m w-third-l pa3">
+    <section id="a" class="fl mw6 w-50-m w-third-l pa3">
       <h2>4.</h2>
       <p>${pageState.users}</p>
       <a href="/about">关于我们</a>
@@ -45,7 +51,7 @@ function A(globalState) {
 // 主View
 function View (globalState) {
   // 类似mounted事件
-  window && ready(()=> {
+  typeof window !== 'undefined' && ready(()=> {
     console.log('home mounted!') 
   })
 

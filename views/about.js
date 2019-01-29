@@ -23,7 +23,7 @@ function b (state) {
 
 function view (state) {
   // 类似mounted事件
-  window && ready(()=> {
+  typeof window !== 'undefined' && ready(()=> {
     console.log('about mounted!') 
   })
 

@@ -30,7 +30,14 @@ function A() {
     emitter.emit('render') 
   }
 
-  return html`
+  return html/*syntax:html*/`
+    <style type="text/css">
+      #a {
+        padding: 5px;
+        margin: 10px;
+        font-size: 16px;
+      }
+    </style>
     <section id="a" class="pa3">
       <h2>4.</h2>
       <p>${pageState.users}</p>
@@ -58,7 +65,7 @@ function View (globalState) {
   const TITLE = 'choo-demo - main2'
   if (globalState.title !== TITLE) emitter.emit(globalState.events.DOMTITLECHANGE, TITLE)
 
-  return html`
+  return html/*syntax:html*/`
     <body class="code lh-copy">
       <main class="pa3 cf center">
         ${A()}

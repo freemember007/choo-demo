@@ -8,7 +8,7 @@ const validator = require('../utils/validator')
 // 头
 function Header () {
 
-  return html`
+  return html/*syntax:html*/`
     <section class="container tc">
       <h1>登录</h1>
     </section>
@@ -34,7 +34,7 @@ function LoignForm () {
       })
   }
 
-  return html`
+  return html/*syntax:html*/`
     <form id="login" onsubmit=${handleLoginFormSubmit}>
       <div class="form-group">
         <label for="username">用户名</label>
@@ -58,7 +58,7 @@ function View (globalState) {
     console.log('about mounted!') 
   })
 
-  return html`
+  return html/*syntax:html*/`
     <body>
       <main class="pa3 cf center">
         ${Header()}

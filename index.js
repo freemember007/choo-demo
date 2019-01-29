@@ -19,14 +19,14 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 // wrapper
-app.use((state, emitter) => {
-  state.global_attr1 = 'global_attr1' 
+app.use((globalState, emitter) => {
+  globalState.someAttr = 'someAttr' 
   emitter.on('DOMContentLoaded', function () {
   })
 })
 root.emitter = app.emitter //@todo: 各页面自己require
 
-app.use(reload())
+// app.use(reload())
 
 // route
 app.route('/', require('./views/home'))

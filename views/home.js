@@ -31,7 +31,7 @@ function A() {
   }
 
   return html`
-    <section id="a" class="fl mw6 w-50-m w-third-l pa3">
+    <section id="a" class="pa3">
       <h2>4.</h2>
       <p>${pageState.users}</p>
       <a href="/about">关于我们</a>
@@ -62,6 +62,7 @@ function View (globalState) {
     <body class="code lh-copy">
       <main class="pa3 cf center">
         ${A()}
+        <a href="/login" class="btn btn-primary block ml3">去登录</a>
       </main>
     </body>
   `

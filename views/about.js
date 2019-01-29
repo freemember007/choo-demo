@@ -1,5 +1,5 @@
-var html = require('choo/html')
-var ready = require('document-ready')
+const html = require('choo/html')
+const ready = require('document-ready')
 
 function a (state) {
   state.about_attr1 = 'attr1'

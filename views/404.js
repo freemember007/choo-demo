@@ -1,9 +1,9 @@
-var html = require('choo/html')
+const html = require('choo/html')
 
 
 function view (state) {
 
-  var TITLE = 'choo-demo - route not found'
+  const TITLE = 'choo-demo - route not found'
   if (state.title !== TITLE) emitter.emit(state.events.DOMTITLECHANGE, TITLE)
 
   return html`

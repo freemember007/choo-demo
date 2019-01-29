@@ -1,12 +1,12 @@
-var css = require('sheetify')
-var choo = require('choo')
-var root = require('window-or-global')
+const css = require('sheetify')
+const choo = require('choo')
+const root = require('window-or-global')
 // const async = require('choo-async') //es6
 
 css('tachyons')
 css('bootstrap')
 
-var app = choo()
+const app = choo()
 
 if (process.env.NODE_ENV !== 'production') {
   app.use(require('choo-devtools')())

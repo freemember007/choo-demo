@@ -55,7 +55,7 @@ function View (globalState) {
     console.log('home mounted!') 
   })
 
-  var TITLE = 'choo-demo - main2'
+  const TITLE = 'choo-demo - main2'
   if (globalState.title !== TITLE) emitter.emit(globalState.events.DOMTITLECHANGE, TITLE)
 
   return html`

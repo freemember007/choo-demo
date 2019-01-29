@@ -2,6 +2,8 @@ const html = require('choo/html')
 const ready = require('document-ready')
 const request = require('superagent')
 const form2json = require('htmlform2json').default
+const validator = require('../utils/validator').default
+
 
 // 头
 function Header () {
@@ -21,6 +23,8 @@ function LoignForm () {
     const body = form2json(e.target)
     // const body = form2json(document.querySelector('#login'))
     // console.log('body', body)
+    validator.notNull(body.username)
+    validator.notNull(body.password)
     request
       .post('/some-api')
       .send(body)

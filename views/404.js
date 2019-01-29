@@ -1,10 +1,9 @@
 const html = require('choo/html')
 
 
-function view (state) {
+function view () {
 
-  const TITLE = 'choo-demo - route not found'
-  if (state.title !== TITLE) emitter.emit(state.events.DOMTITLECHANGE, TITLE)
+  emitter.emit('DOMTitleChange', '404')
 
   return html/*syntax:html*/`
     <body class="sans-serif pa3">

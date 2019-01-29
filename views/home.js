@@ -1,5 +1,8 @@
+/*
+ * 首页
+ */
+
 const html = require('choo/html')
-const ready = require('document-ready')
 const request = require('superagent')
 
 // state
@@ -11,9 +14,7 @@ const pageState = {
 // 元件A
 function A() {
 
-  typeof window !== 'undefined' && ready(()=> {
-    getUsers()
-  })
+  typeof window !== 'undefined' && getUsers()
 
   function getUsers(){
     request.get('https://localhost:8080/about')
@@ -56,14 +57,11 @@ function A() {
 }
 
 // 主View
-function View (globalState) {
-  // 类似mounted事件
-  typeof window !== 'undefined' && ready(()=> {
-    console.log('home mounted!') 
-  })
+function View (/*globalState*/) {
 
-  const TITLE = 'choo-demo - main2'
-  if (globalState.title !== TITLE) emitter.emit(globalState.events.DOMTITLECHANGE, TITLE)
+  console.log('home mounted!') 
+
+  emitter.emit('DOMTitleChange', '首页')
 
   return html/*syntax:html*/`
     <body class="code lh-copy">

@@ -1,6 +1,6 @@
 const html = require('choo/html')
 const ready = require('document-ready')
-const agent = require('superagent')
+const request = require('superagent')
 
 // state
 const pageState = {
@@ -16,7 +16,7 @@ function A() {
   })
 
   function getUsers(){
-    agent.get('https://localhost:8080/about')
+    request.get('https://localhost:8080/about')
      .then(function(res){
         const _users = res.text.slice(0,100)
         pageState.users != _users

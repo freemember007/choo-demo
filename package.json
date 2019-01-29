@@ -17,6 +17,7 @@
     "choo-reload": "^1.1.1",
     "choo-service-worker": "^2.4.0",
     "document-ready": "^2.0.2",
+    "htmlform2json": "^1.0.0",
     "nanomorph": "^5.2.0",
     "sheetify": "^7.3.3",
     "superagent": "^4.1.0",

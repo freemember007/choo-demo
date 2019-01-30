@@ -17,7 +17,7 @@ function A() {
   typeof window !== 'undefined' && getUsers()
 
   function getUsers(){
-    request.get('https://localhost:8080/about')
+    request.get('https://localhost:8080/user')
      .then(function(res){
         const _users = res.text.slice(0,100)
         pageState.users != _users

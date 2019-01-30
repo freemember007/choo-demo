@@ -1,8 +1,10 @@
 const css = require('sheetify')
 const choo = require('choo')
 const root = require('window-or-global')
-// const async = require('choo-async') //es6
 const reload = require('choo-reload')
+// const async = require('choo-async') //es6
+// require('babel-polyfill')
+
 
 // css
 css('tachyons')

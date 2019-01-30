@@ -1,18 +1,106 @@
 /*
  * 首页
  */
-
 const html = require('choo/html')
 const request = require('superagent')
+const dayjs = require('dayjs')
 
 // state
 const pageState = {
   count: 0,
   users: '',
 }
+ 
+// Header
+function Header () {
+
+  const today = dayjs().format('YYYY年MM月DD日')
+
+  return html/*syntax:html*/`
+    <div class="w-100 pa3 tc f4 bb">
+      ${today}
+    </div >
+  `
+}
+
+// 表头
+function TableHeader () {
+  
+  const dateArr = ['09', '10', '11', '12', '13', '14', '15']
+  const weekArr = ['一', '二', '三', '四', '五', '六', '日']
+  
+  return html/*syntax:html*/`
+    <section class="flex ma3">
+
+      <!-- 左边 -->
+      <div class="w-10 mr3 ">
+        <img class="br-100" src="./assets/avatar.jpg">
+      </div>
+  
+      <!-- 右边 -->
+      <div class="w-90 flex flex-column">
+        <!-- 星期 -->
+        <div class="w-100 flex justify-between">
+          ${weekArr.map(week => html/*syntax:html*/`
+            <span class="b">
+              ${week}
+            </span>
+          `)}
+        </div>
+        <!-- 日期 -->
+        <div class="w-100 flex justify-between">
+          ${dateArr.map(date => html/*syntax:html*/`
+            <span class="b">
+              ${date}
+            </span>
+          `)}
+        </div>
+      </div>
+
+    </section>
+  `
+} 
+
+// 表格
+function TableGrid () {
+ 
+  const habitArr = ['七点起床', '洗脸刷牙', '去学校', '九点上床']
+
+  return html/*syntax:html*/`
+    <section class="flex flex-column">
+
+      ${habitArr.map(name => {
+        return html/*syntax:html*/`
+          <div class="flex ma3">
+          
+            <!-- 左边 -->
+            <div class="w-10 mr3 ">
+              <span>${name}</span>
+            </div>
+        
+            <!-- 右部 -->
+            <div class="w-90 flex flex-column">
+              <!-- 日期 -->
+              <div class="w-100 flex justify-between">
+                ${[1,2,3,4,5,6,7].map(i => html/*syntax:html*/`
+                  <span class="bb pa2">
+                    ${''}
+                  </span>
+                `)}
+              </div>
+
+
+            </div>
+            
+          </div>
+        `
+      })}
+    </section>
+  `
+}
 
 // 元件A
-function A() {
+function SomeComponent() {
 
   typeof window !== 'undefined' && getUsers()
 
@@ -33,25 +121,75 @@ function A() {
 
   return html/*syntax:html*/`
     <style type="text/css">
-      #a {
+      .someStyle {
         padding: 5px;
-        margin: 10px;
-        font-size: 16px;
       }
     </style>
-    <section id="a" class="pa3">
-      <h2>4.</h2>
-      <p>${pageState.users}</p>
-      <a href="/about">关于我们</a>
 
+    <section class="pa3">
+      <p>${pageState.users}</p>
       <p>Number of clicks stored: ${pageState.count}</p>
 
-      <button class="btn btn-primary dim ph3 ba bw1 pv2 b--black pointer bg-white"
-        onclick=${handleClick}>
+      <button class="btn btn-primary"onclick=${handleClick}>
         Emit a click event
       </button>
 
-      <br><br>
+      <a href="/about">关于我们</a>
+    </section>
+  `
+}
+
+// 新增计划按钮
+function AddMoreBtn () {
+  
+  return html/*syntax:html*/`
+    <section class="flex ">
+      <button type="submit" class="btn btn-primary btn-lg btn-block">增加新的计划</button>
+    </section>
+  `
+}
+
+// 统计
+function Statistics () {
+
+  return html/*syntax:html*/`
+    <section class="ma4 ">
+
+      <!-- 花朵 -->
+      <div class="flex w-100 pa3 justify-between tc">
+        <span class="w-25"> </span>
+        <div class="w-25"><img width="50px" height="50px" src="./assets/md-flower.png"/></div>
+        <div class="w-25"><img width="50px" height="50px" src="./assets/md-flower-2.png"/></div>
+        <div class="w-25"><img width="50px" height="50px" src="./assets/md-flower-3.png"/></div>
+      </div>
+
+      <!-- 当日统计 -->
+      <div class="flex w-100 pa3 justify-between tc">
+        <span class="w-25">当日统计</span>
+        <span class="w-25">0</span>
+        <span class="w-25">0</span>
+        <span class="w-25">0</span>
+      </div>
+
+      <!-- 本周统计 -->
+      <div class="flex w-100 pa3 justify-between tc">
+        <span class="w-25">本周统计</span>
+        <span class="w-25">1</span>
+        <span class="w-25">1</span>
+        <span class="w-25">1</span>
+      </div>
+      
+    </section>
+  `
+    
+}
+
+// 脚
+function Footer () {
+
+  return html/*syntax:html*/`
+    <section class="mt3 tr">
+      <a href="/login">去登录</a>
     </section>
   `
 }
@@ -66,8 +204,12 @@ function View (/*globalState*/) {
   return html/*syntax:html*/`
     <body class="code lh-copy">
       <main class="pa3 cf center">
-        ${A()}
-        <a href="/login" class="btn btn-primary block ml3">去登录</a>
+        ${Header()}
+        ${TableHeader()}
+        ${TableGrid()}
+        ${Statistics()}
+        ${AddMoreBtn()}
+        ${Footer()}
       </main>
     </body>
   `

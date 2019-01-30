@@ -4,20 +4,23 @@
 const html = require('choo/html')
 const request = require('superagent')
 const dayjs = require('dayjs')
-const ready = require('document-ready')
-// const { addClass } = require('dom-helpers/class') //toggleClass不可用
 const dom = require('dom')
-// const dom = require('DOMtastic') //效果同上
 
 // state
 const pageState = {
   count: 0,
   users: '',
 }
- 
+
+// actions
+function getUsers (){
+  return request
+    .get('https://localhost:8080/user')
+    .then(res => res.text.slice(0,100))
+}
+
 // Header
 function Header () {
-
   const today = dayjs().format('YYYY年MM月DD日')
 
   return html/*syntax:html*/`
@@ -27,13 +30,11 @@ function Header () {
     <button class="btn badge" data-badge="8">
       Button
     </button>
-
   `
 }
 
 // 表头
 function TableHeader () {
-  
   const dateArr = ['09', '10', '11', '12', '13', '14', '15']
   const weekArr = ['一', '二', '三', '四', '五', '六', '日']
   
@@ -71,7 +72,6 @@ function TableHeader () {
 
 // 表格
 function TableGrid () {
- 
   const habitArr = ['七点起床', '洗脸刷牙', '去学校', '九点上床']
 
   return html/*syntax:html*/`
@@ -106,19 +106,12 @@ function TableGrid () {
 }
 
 // 元件A
-function SomeComponent() {
+function SomeComponent () {
 
-  typeof window !== 'undefined' && getUsers()
-
-  function getUsers(){
-    request.get('https://localhost:8080/user')
-     .then(function(res){
-        const _users = res.text.slice(0,100)
-        pageState.users != _users
-        && (pageState.users = _users) //为对象的情况下要深度比较
-        && emitter.emit('render') // 不完美，其他小组件更新时每次都会重新请求，要引入async
-      })
-  }
+  if(!pageState.users) getUsers().then(data => {
+      pageState.users = data
+      emitter.emit('render')
+    })
 
   function handleClick () {
     pageState.count += 1
@@ -145,13 +138,8 @@ function SomeComponent() {
   `
 }
 
-
 // 新增计划按钮
 function AddMoreBtn () {
-
-  // function handleAddMoreBtnClick (e) {
-  //   addClass(document.querySelector('#modal-id'), 'active')
-  // }
 
   function toggleModalShow (e) {
     e.preventDefault()
@@ -164,6 +152,7 @@ function AddMoreBtn () {
       <!-- button -->
       <button type="text" onclick=${toggleModalShow} class="btn btn-primary btn-lg btn-block">增加新的计划</button>
 
+      <!-- modal -->
       <div class="modal" id="add-more-modal">
         <a href="#close" class="modal-overlay" aria-label="Close" onclick=${toggleModalShow}></a>
         <div class="modal-container">
@@ -234,7 +223,6 @@ function Footer () {
 function Main (/*globalState*/) {
 
   console.log('home mounted!') 
-
   emitter.emit('DOMTitleChange', '首页')
 
   return html/*syntax:html*/`
@@ -242,6 +230,7 @@ function Main (/*globalState*/) {
       <main class="pa3 cf center">
         ${Header()}
         ${TableHeader()}
+        ${SomeComponent()}
         ${TableGrid()}
         ${Statistics()}
         ${AddMoreBtn()}

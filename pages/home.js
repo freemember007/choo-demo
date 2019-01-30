@@ -2,7 +2,7 @@
  * 首页
  */
 const html = require('choo/html')
-const request = require('superagent')
+const request = require('../utils/request')
 const dayjs = require('dayjs')
 const dom = require('dom')
 
@@ -15,7 +15,7 @@ const pageState = {
 // actions
 function getUsers (){
   return request
-    .get('https://localhost:8080/user')
+    .get('user')
     .then(res => res.text.slice(0,100))
 }
 

@@ -1,11 +1,11 @@
 /*
  * 注册
  */
-
 const html = require('choo/html')
-const request = require('superagent')
+const request = require('../utils/request')
 const form2json = require('htmlform2json').default
 const validator = require('../utils/validator')
+const isLoading = require('is-loading')
 
 // 头
 function Header () {
@@ -18,18 +18,30 @@ function Header () {
 }
 
 // 表单
-function RegisterForm () {
+function SignupForm () {
 
-  function handleRegisterFormSubmit (e) {
+  function handleSignupFormSubmit (e) {
     e.preventDefault()
-    const body = form2json(e.target)
-    // const body = form2json(document.querySelector('#register'))
-    // console.log('body', body)
+
+    // 验证
+    const body = form2json(document.querySelector('#signup-form'))
+    // const body = form2json(e.target) //or
     validator.match(body.username, /.{4,25}/, '用户名', '限制4-25位英文、数字、下划线')
     validator.notNull(body.password, '密码')
     validator.equal(body.password, body.repassword, '重复密码')
+
+    // 提交中...
+    const button$ = document.querySelector('#signup-button')
+    const loader$ = isLoading(button$, { 
+      text: '提交中...',
+      disableList: [document.querySelector('#username')] //@todo: 一次选取多个
+    })
+    loader$.loading()
+    setTimeout(_ => loader$.remove(), 1000)
+
+    // 提交
     request
-      .post('/register')
+      .post('signup')
       .send(body)
       .then(res => {
         console.log(res)
@@ -38,7 +50,7 @@ function RegisterForm () {
   }
 
   return html/*syntax:html*/`
-    <form id="register" onsubmit=${handleRegisterFormSubmit}>
+    <form id="signup-form" onsubmit=${handleSignupFormSubmit}>
       <div class="form-group">
         <label class="form-label" for="username">用户名</label>
         <input class="form-input form-control" id="username" name="username" placeholder="输入用户名">
@@ -51,7 +63,7 @@ function RegisterForm () {
         <label class="form-label" for="repassword">重复密码</label>
         <input type="password" class="form-input form-control" id="repassword" name="repassword" placeholder="再次输入密码">
       </div>
-      <button type="submit" class="btn btn-primary btn-lg btn-block">提交</button>
+   <button type="submit" id="signup-button"class="btn btn-primary btn-lg btn-block">提交</button>
     </form>
   `
 }
@@ -75,7 +87,7 @@ function Main () {
     <body>
       <main class="pa3 cf center">
         ${Header()}
-        ${RegisterForm()}
+        ${SignupForm()}
         ${Footer()}
       </main>
     </body>

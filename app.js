@@ -35,7 +35,7 @@ root.emitter = app.emitter //@todo: 各页面自己require
 app.route('/', require('./pages/home'))
 app.route('/about', require('./pages/about'))
 app.route('/login', require('./pages/login'))
-app.route('/register', require('./pages/register'))
+app.route('/signup', require('./pages/signup'))
 app.route('/*', require('./pages/404'))
 
 // mount

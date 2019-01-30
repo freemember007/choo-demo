@@ -58,7 +58,7 @@ function Footer () {
 
   return html/*syntax:html*/`
     <section class="mt3 tr">
-      <a href="/register">去注册</a>
+      <a href="/signup">去注册</a>
     </section>
   `
 }

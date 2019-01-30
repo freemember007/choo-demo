@@ -4,6 +4,10 @@
 const html = require('choo/html')
 const request = require('superagent')
 const dayjs = require('dayjs')
+const ready = require('document-ready')
+// const { addClass } = require('dom-helpers/class') //toggleClass不可用
+const dom = require('dom')
+// const dom = require('DOMtastic') //效果同上
 
 // state
 const pageState = {
@@ -20,6 +24,10 @@ function Header () {
     <div class="w-100 pa3 tc f4 bb">
       ${today}
     </div >
+    <button class="btn badge" data-badge="8">
+      Button
+    </button>
+
   `
 }
 
@@ -89,9 +97,7 @@ function TableGrid () {
                 `)}
               </div>
 
-
             </div>
-            
           </div>
         `
       })}
@@ -139,12 +145,43 @@ function SomeComponent() {
   `
 }
 
+
 // 新增计划按钮
 function AddMoreBtn () {
-  
+
+  // function handleAddMoreBtnClick (e) {
+  //   addClass(document.querySelector('#modal-id'), 'active')
+  // }
+
+  function toggleModalShow (e) {
+    e.preventDefault()
+    dom('#add-more-modal').toggleClass('active')
+  }
+
   return html/*syntax:html*/`
     <section class="flex ">
-      <button type="submit" class="btn btn-primary btn-lg btn-block">增加新的计划</button>
+
+      <!-- button -->
+      <button type="text" onclick=${toggleModalShow} class="btn btn-primary btn-lg btn-block">增加新的计划</button>
+
+      <div class="modal" id="add-more-modal">
+        <a href="#close" class="modal-overlay" aria-label="Close" onclick=${toggleModalShow}></a>
+        <div class="modal-container">
+          <div class="modal-header">
+            <a href="#close" class="btn btn-clear float-right" onclick=${toggleModalShow} aria-label="Close"></a>
+            <div class="modal-title h5">Modal title</div>
+          </div>
+          <div class="modal-body">
+            <div class="content">
+              <!-- content here -->
+            </div>
+          </div>
+          <div class="modal-footer">
+            ...
+          </div>
+        </div>
+      </div>
+
     </section>
   `
 }
@@ -181,7 +218,6 @@ function Statistics () {
       
     </section>
   `
-    
 }
 
 // 脚
@@ -195,7 +231,7 @@ function Footer () {
 }
 
 // 主View
-function View (/*globalState*/) {
+function Main (/*globalState*/) {
 
   console.log('home mounted!') 
 
@@ -215,4 +251,4 @@ function View (/*globalState*/) {
   `
 }
 
-module.exports = View
+module.exports = Main

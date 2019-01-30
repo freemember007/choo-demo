@@ -2,13 +2,15 @@ const css = require('sheetify')
 const choo = require('choo')
 const root = require('window-or-global')
 const reload = require('choo-reload')
+
 // const async = require('choo-async') //es6
 // require('babel-polyfill')
 
 
 // css
 css('tachyons')
-css('./node_modules/bootstrap/dist/css/bootstrap.min.css')
+// css('./node_modules/bootstrap/dist/css/bootstrap.min.css')
+css('./node_modules/spectre.css/dist/spectre.css')
 
 
 const app = choo()
@@ -27,15 +29,14 @@ app.use((globalState, emitter) => {
   })
 })
 root.emitter = app.emitter //@todo: 各页面自己require
-
 // app.use(reload())
 
 // route
-app.route('/', require('./views/home'))
-app.route('/about', require('./views/about'))
-app.route('/login', require('./views/login'))
-app.route('/register', require('./views/register'))
-app.route('/*', require('./views/404'))
+app.route('/', require('./pages/home'))
+app.route('/about', require('./pages/about'))
+app.route('/login', require('./pages/login'))
+app.route('/register', require('./pages/register'))
+app.route('/*', require('./pages/404'))
 
 // mount
 module.exports = app.mount('body')

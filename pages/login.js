@@ -40,12 +40,12 @@ function LoignForm () {
   return html/*syntax:html*/`
     <form id="login" onsubmit=${handleLoginFormSubmit}>
       <div class="form-group">
-        <label for="username">用户名</label>
-        <input class="form-control" id="username" name="username" placeholder="输入用户名">
+        <label class="form-label" for="username">用户名</label>
+        <input class="form-input form-control" id="username" name="username" placeholder="输入用户名">
       </div>
       <div class="form-group">
-        <label for="password">密码</label>
-        <input type="password" class="form-control" id="password" name="password" placeholder="输入密码">
+        <label class="form-label" for="password">密码</label>
+        <input type="password" class="form-input form-control" id="password" name="password" placeholder="输入密码">
       </div>
       <button type="submit" class="btn btn-primary btn-lg btn-block">提交</button>
     </form>
@@ -65,7 +65,7 @@ function Footer () {
 
 
 // 主入口
-function View (/*globalState*/) {
+function Main (/*globalState*/) {
 
   emitter.emit('DOMTitleChange', '登录')
 
@@ -80,4 +80,4 @@ function View (/*globalState*/) {
   `
 }
 
-module.exports = View
+module.exports = Main

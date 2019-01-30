@@ -1,7 +1,7 @@
 const html = require('choo/html')
 
 
-function view () {
+function Main () {
 
   emitter.emit('DOMTitleChange', '404')
 
@@ -13,7 +13,7 @@ function view () {
   `
 }
 
-module.exports = view
+module.exports = Main
 
 
 

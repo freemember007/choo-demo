@@ -24,7 +24,7 @@ function Header () {
   const today = dayjs().format('YYYY年MM月DD日')
 
   return html/*syntax:html*/`
-    <div class="w-100 pa3 tc f4 bb">
+    <div class="w-100 pa3 tc f4 bb b--black-30">
       ${today}
     </div >
 <!--     <button class="btn badge" data-badge="8">
@@ -79,7 +79,7 @@ function TableGrid () {
 
       ${habitArr.map(name => {
         return html/*syntax:html*/`
-          <div class="flex ma2">
+          <div class="flex mh2 mv3">
           
             <!-- 左边 -->
             <div class="w-20 mr1" style="font-size: 14px">

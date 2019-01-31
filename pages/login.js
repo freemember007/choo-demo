@@ -6,6 +6,8 @@ const html = require('choo/html')
 const request = require('superagent')
 const form2json = require('htmlform2json').default
 const validator = require('../utils/validator')
+const isLoading = require('is-loading')
+const dom = require('dom')
 
 
 // 头
@@ -24,16 +26,30 @@ function LoignForm () {
   function handleLoginFormSubmit (e) {
     e.preventDefault()
     const body = form2json(e.target)
-    // const body = form2json(document.querySelector('#login'))
-    // console.log('body', body)
+
+    // 验证
     validator.notNull(body.username, '用户名')
     validator.notNull(body.password, '密码')
+
+    // 提交中...
+    const button$ = document.querySelector('#login-button')
+    const loader$ = isLoading(button$, { 
+      text: '提交中...',
+      disableList: [
+        document.querySelector('#username'),
+        document.querySelector('#password')
+      ] //@todo: 一次选取多个
+    })
+    loader$.loading()
+    setTimeout(_ => loader$.remove(), 1000)
+
+    // 提交
     request
       .post('/some-api')
       .send(body)
       .then(res => {
         console.log(res)
-        emitter.emit('pushState', '/')
+        setTimeout(_ => emitter.emit('pushState', '/'), 1000)
       })
   }
 
@@ -47,7 +63,7 @@ function LoignForm () {
         <label class="form-label" for="password">密码</label>
         <input type="password" class="form-input form-control" id="password" name="password" placeholder="输入密码">
       </div>
-      <button type="submit" class="btn btn-primary btn-lg btn-block">提交</button>
+      <button type="submit" id="login-button" class="btn btn-primary btn-lg btn-block">提交</button>
     </form>
   `
 }

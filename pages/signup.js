@@ -45,7 +45,7 @@ function SignupForm () {
       .send(body)
       .then(res => {
         console.log(res)
-        emitter.emit('pushState', '/')
+        setTimeout(_ => emitter.emit('pushState', '/'), 1000)
       })
   }
 

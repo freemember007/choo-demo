@@ -39,7 +39,7 @@ function TableHeader () {
   const weekArr = ['一', '二', '三', '四', '五', '六', '日']
   
   return html/*syntax:html*/`
-    <section class="flex ma1">
+    <section class="flex ma1 mt3">
 
       <!-- 左边 -->
       <div class="w-20 ">
@@ -51,7 +51,7 @@ function TableHeader () {
         <!-- 星期 -->
         <div class="w-100 flex justify-between">
           ${weekArr.map(week => html/*syntax:html*/`
-            <span class="b">
+            <span class="">
               ${week}
             </span>
           `)}
@@ -59,7 +59,7 @@ function TableHeader () {
         <!-- 日期 -->
         <div class="w-100 flex justify-between">
           ${dateArr.map(date => html/*syntax:html*/`
-            <span class="b">
+            <span class="">
               ${date}
             </span>
           `)}
@@ -91,7 +91,7 @@ function TableGrid () {
               <!-- 日期 -->
               <div class="w-100 flex justify-between">
                 ${[1,2,3,4,5,6,7].map(i => html/*syntax:html*/`
-                  <span class="bb pa2">
+                  <span class="bb b--black-20 pa2">
                     ${''}
                   </span>
                 `)}
@@ -144,7 +144,7 @@ function SomeComponent () {
 function Statistics () {
 
   return html/*syntax:html*/`
-    <section class=" ">
+    <section class="mv3 ">
 
       <!-- 花朵 -->
       <div class="flex w-100 pa1 justify-between tc">

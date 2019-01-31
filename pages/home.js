@@ -39,15 +39,15 @@ function TableHeader () {
   const weekArr = ['一', '二', '三', '四', '五', '六', '日']
   
   return html/*syntax:html*/`
-    <section class="flex ma3">
+    <section class="flex ma1">
 
       <!-- 左边 -->
-      <div class="w-10 mr3 ">
+      <div class="w-20 ">
         <img class="br-100" src="./assets/avatar.jpg">
       </div>
   
       <!-- 右边 -->
-      <div class="w-90 flex flex-column">
+      <div class="w-80 flex flex-column">
         <!-- 星期 -->
         <div class="w-100 flex justify-between">
           ${weekArr.map(week => html/*syntax:html*/`
@@ -75,19 +75,19 @@ function TableGrid () {
   const habitArr = ['七点起床', '洗脸刷牙', '去学校', '九点上床']
 
   return html/*syntax:html*/`
-    <section class="flex flex-column">
+    <section class="">
 
       ${habitArr.map(name => {
         return html/*syntax:html*/`
-          <div class="flex ma3">
+          <div class="flex ma2">
           
             <!-- 左边 -->
-            <div class="w-10 mr3 ">
+            <div class="w-20 mr1" style="font-size: 14px">
               <span>${name}</span>
             </div>
         
             <!-- 右部 -->
-            <div class="w-90 flex flex-column">
+            <div class="w-80 flex flex-column">
               <!-- 日期 -->
               <div class="w-100 flex justify-between">
                 ${[1,2,3,4,5,6,7].map(i => html/*syntax:html*/`
@@ -138,6 +138,42 @@ function SomeComponent () {
   `
 }
 
+
+
+// 统计
+function Statistics () {
+
+  return html/*syntax:html*/`
+    <section class=" ">
+
+      <!-- 花朵 -->
+      <div class="flex w-100 pa1 justify-between tc">
+        <span class="w-25"> </span>
+        <div class="w-25"><img width="50px" height="50px" src="./assets/md-flower.png"/></div>
+        <div class="w-25"><img width="50px" height="50px" src="./assets/md-flower-2.png"/></div>
+        <div class="w-25"><img width="50px" height="50px" src="./assets/md-flower-3.png"/></div>
+      </div>
+
+      <!-- 当日统计 -->
+      <div class="flex w-100 pa1 justify-between tc">
+        <span class="w-25">当日统计</span>
+        <span class="w-25">0</span>
+        <span class="w-25">0</span>
+        <span class="w-25">0</span>
+      </div>
+
+      <!-- 本周统计 -->
+      <div class="flex w-100 pa1 justify-between tc">
+        <span class="w-25">本周统计</span>
+        <span class="w-25">1</span>
+        <span class="w-25">1</span>
+        <span class="w-25">1</span>
+      </div>
+      
+    </section>
+  `
+}
+
 // 新增计划按钮
 function AddMoreBtn () {
 
@@ -147,7 +183,7 @@ function AddMoreBtn () {
   }
 
   return html/*syntax:html*/`
-    <section class="flex ">
+    <section class="flex mt2">
 
       <!-- button -->
       <button type="text" onclick=${toggleModalShow} class="btn btn-primary btn-lg btn-block">增加新的计划</button>
@@ -175,40 +211,6 @@ function AddMoreBtn () {
   `
 }
 
-// 统计
-function Statistics () {
-
-  return html/*syntax:html*/`
-    <section class="ma4 ">
-
-      <!-- 花朵 -->
-      <div class="flex w-100 pa3 justify-between tc">
-        <span class="w-25"> </span>
-        <div class="w-25"><img width="50px" height="50px" src="./assets/md-flower.png"/></div>
-        <div class="w-25"><img width="50px" height="50px" src="./assets/md-flower-2.png"/></div>
-        <div class="w-25"><img width="50px" height="50px" src="./assets/md-flower-3.png"/></div>
-      </div>
-
-      <!-- 当日统计 -->
-      <div class="flex w-100 pa3 justify-between tc">
-        <span class="w-25">当日统计</span>
-        <span class="w-25">0</span>
-        <span class="w-25">0</span>
-        <span class="w-25">0</span>
-      </div>
-
-      <!-- 本周统计 -->
-      <div class="flex w-100 pa3 justify-between tc">
-        <span class="w-25">本周统计</span>
-        <span class="w-25">1</span>
-        <span class="w-25">1</span>
-        <span class="w-25">1</span>
-      </div>
-      
-    </section>
-  `
-}
-
 // 脚
 function Footer () {
 
@@ -227,10 +229,9 @@ function Main (/*globalState*/) {
 
   return html/*syntax:html*/`
     <body class="code lh-copy">
-      <main class="pa3 cf center">
+      <main class="pa1 cf center">
         ${Header()}
         ${TableHeader()}
-        ${SomeComponent()}
         ${TableGrid()}
         ${Statistics()}
         ${AddMoreBtn()}

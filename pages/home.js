@@ -27,10 +27,10 @@ function Header () {
     <div class="w-100 pa3 tc f4 bb">
       ${today}
     </div >
-    <button class="btn badge" data-badge="8">
+<!--     <button class="btn badge" data-badge="8">
       Button
     </button>
-  `
+ -->  `
 }
 
 // 表头

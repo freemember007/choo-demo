@@ -2,6 +2,7 @@ const css = require('sheetify')
 const choo = require('choo')
 const root = require('window-or-global')
 const reload = require('choo-reload')
+//const WebConsole = require('@whinc/web-console')
 
 // const async = require('choo-async') //es6
 // require('babel-polyfill')
@@ -9,7 +10,8 @@ const reload = require('choo-reload')
 
 // css
 css('tachyons')
-// css('./node_modules/bootstrap/dist/css/bootstrap.min.css')
+//css('./assets/base.styl')
+//css('./node_modules/bootstrap/dist/css/bootstrap.min.css')
 css('./node_modules/spectre.css/dist/spectre.css')
 
 
@@ -26,6 +28,12 @@ if (process.env.NODE_ENV !== 'production') {
 app.use((globalState, emitter) => {
   globalState.someAttr = 'someAttr' 
   emitter.on('DOMContentLoaded', function () {
+	  //const webConsole = new WebConsole()
+	  //@todo: change alert to toast 
+	  window.onerror = (msg, url, line) => {
+		//alert(JSON.stringify({msg, url, line})) 
+		alert(msg)
+	  }
   })
 })
 root.emitter = app.emitter //@todo: 各页面自己require

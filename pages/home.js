@@ -5,11 +5,15 @@ const html = require('choo/html')
 const request = require('../utils/request')
 const dayjs = require('dayjs')
 const dom = require('dom')
+const root = require('window-or-global')
+const form2json = require('htmlform2json').default
+const validator = require('../utils/validator')
 
 // state
 const pageState = {
   count: 0,
   users: '',
+  planArr: ['七点起床', '洗脸刷牙', '去学校', '九点上床'],
 }
 
 // actions
@@ -72,12 +76,11 @@ function TableHeader () {
 
 // 表格
 function TableGrid () {
-  const habitArr = ['七点起床', '洗脸刷牙', '去学校', '九点上床']
 
   return html/*syntax:html*/`
     <section class="">
 
-      ${habitArr.map(name => {
+      ${pageState.planArr.map(name => {
         return html/*syntax:html*/`
           <div class="flex mh2 mv3">
           
@@ -106,37 +109,44 @@ function TableGrid () {
 }
 
 // 元件A
-function SomeComponent () {
+const SomeComponent = (_ => {
 
-  if(!pageState.users) getUsers().then(data => {
-      pageState.users = data
-      emitter.emit('render')
-    })
+	let localState = {
+		count: 0
+	}
+	return function SomeComponent () {
 
-  function handleClick () {
-    pageState.count += 1
-    emitter.emit('render') 
-  }
+	  if(!pageState.users) getUsers().then(data => {
+		  pageState.users = data
+		  emitter.emit('render')
+		})
 
-  return html/*syntax:html*/`
-    <style type="text/css">
-      .someStyle {
-        padding: 5px;
-      }
-    </style>
+	  function handleClick () {
+		localState.count += 1
+		emitter.emit('render') 
+	  }
 
-    <section class="pa3">
-      <p>${pageState.users}</p>
-      <p>Number of clicks stored: ${pageState.count}</p>
+	  return html/*syntax:html*/`
+		<style type="text/css">
+		  .someStyle {
+			padding: 5px;
+		  }
+		</style>
 
-      <button class="btn btn-primary"onclick=${handleClick}>
-        Emit a click event
-      </button>
+		<section class="pa3">
+		  <p>${pageState.users}</p>
+		  <p>Number of clicks stored: ${localState.count}</p>
 
-      <a href="/about">关于我们</a>
-    </section>
-  `
-}
+		  <button class="btn btn-primary"onclick=${handleClick}>
+			Emit a click event
+		  </button>
+
+		  <a href="/about">关于我们</a>
+		</section>
+	  `
+	}
+
+})(root)
 
 
 
@@ -183,32 +193,69 @@ function AddMoreBtn () {
   }
 
   return html/*syntax:html*/`
-    <section class="flex mt2">
+    <section class="">
 
       <!-- button -->
       <button type="text" onclick=${toggleModalShow} class="btn btn-primary btn-lg btn-block">增加新的计划</button>
+	  ${AddPlanModal({ toggleModalShow })}
+    </section>
+  `
+}
 
+function AddPlanModal (props) {
+	function handleAddPlanFormSubmit(){
+		const body = form2json(document.querySelector('#add-plan-form'))
+		//alert(body['plan-name'])
+		validator.notNull(body['plan-name'], '计划名称')
+		pageState.planArr.push(body['plan-name'])
+		emitter.emit('render')
+	}
+	return html`	
       <!-- modal -->
-      <div class="modal" id="add-more-modal">
-        <a href="#close" class="modal-overlay" aria-label="Close" onclick=${toggleModalShow}></a>
+	  <section class="modal" id="add-more-modal">
+        <a href="#close" class="modal-overlay" aria-label="Close" onclick=${props.toggleModalShow}></a>
         <div class="modal-container">
           <div class="modal-header">
-            <a href="#close" class="btn btn-clear float-right" onclick=${toggleModalShow} aria-label="Close"></a>
-            <div class="modal-title h5">Modal title</div>
+            <a href="#close" class="btn btn-clear float-right" onclick=${props.toggleModalShow} aria-label="Close"></a>
+            <div class="modal-title f5">添加新计划</div>
           </div>
           <div class="modal-body">
             <div class="content">
-              <!-- content here -->
+				<form id="add-plan-form" class="form-horizontal">
+					<div class="form-group"> 
+						<div class="col-3 col-sm-12"> 
+							<label class="form-label" for="input-example-1">计划名称</label> 
+						</div> 
+						<div class="col-9 col-sm-12"> 
+							<input class="form-input" type="text" name="plan-name" placeholder="请输入计划名称"> 
+						</div> 
+					</div>
+					<div class="form-group"> 
+						<div class="col-3 col-sm-12"> 
+							<label class="form-label" for="plan-stime">开始时间</label> 
+						</div> 
+						<div class="col-9 col-sm-12"> 
+							<input class="form-input" type="time" step="5" name="plan-stime" placeholder="Name"> 
+						</div> 
+					</div>
+					<div class="form-group"> 
+						<div class="col-3 col-sm-12"> 
+							<label class="form-label" for="plan-etime">结束时间</label> 
+						</div>
+						<div class="col-9 col-sm-12"> 
+							<input class="form-input" type="time" step="5" name="plan-etime" placeholder="Name"> 
+						</div> 
+					</div>
+				</form>
             </div>
           </div>
           <div class="modal-footer">
-            ...
+            <button class="btn mr2" onclick=${props.toggleModalShow}>取消</button>
+            <button class="btn btn-primary" onclick=${handleAddPlanFormSubmit}>确定</button>
           </div>
         </div>
-      </div>
-
-    </section>
-  `
+      </section>
+	`
 }
 
 // 脚

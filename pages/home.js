@@ -2,7 +2,6 @@
  * 首页
  */
 const html = require('choo/html')
-const raw = require('choo/html/raw')
 const request = require('../utils/request')
 const dayjs = require('dayjs')
 const dom = require('dom')
@@ -10,13 +9,14 @@ const root = require('window-or-global')
 const form2json = require('htmlform2json').default
 const validator = require('../utils/validator')
 const flatten = require('lodash/fp/flatten')
+const Modal = require('../components/Modal')
 
 // state
 const pageState = {
   count: 0,
   users: '',
   planArr: [
-	{name: '七点起床',scores: [null, null, 0, -1, 0, 0, 0]},
+	{name: '七点起床',scores: [1, 1, 0, -1, 0, 0, 0]},
 	{name: '洗脸刷牙',scores: [-1, 0, 0, -1, 0, 0, 1]},
 	{name: '去学校',scores: [0, 0, 1, 0, 0, 0, 0]},
 	{name: '九点上床',scores: [0, 0, 0, 1, 1, 0, -1]},
@@ -48,7 +48,7 @@ function Header () {
 function TableHeader () {
   const dateArr = ['09', '10', '11', '12', '13', '14', '15']
   const weekArr = ['一', '二', '三', '四', '五', '六', '日']
-  
+
   return html/*syntax:html*/`
     <section class="flex ma1 mt3">
 
@@ -56,7 +56,7 @@ function TableHeader () {
       <div class="w-20 ">
         <img class="br-100" src="./assets/avatar.jpg">
       </div>
-  
+
       <!-- 右边 -->
       <div class="w-80 flex flex-column">
         <!-- 星期 -->
@@ -79,7 +79,7 @@ function TableHeader () {
 
     </section>
   `
-} 
+}
 
 // 表格
 function TableGrid () {
@@ -87,7 +87,7 @@ function TableGrid () {
   function score2flower (score) {
 	if(score === null || score === undefined) return ' '
 	const iconId = score === 1 ? 1 : score === 0 ? 2 : 3
-	return raw(`<img width="24px" height="24px" src="./assets/md-flower-${iconId}.png"/>`)
+	return html`<img width="24px" height="24px" src="./assets/md-flower-${iconId}.png"/>`
   }
 
   return html/*syntax:html*/`
@@ -96,12 +96,12 @@ function TableGrid () {
       ${pageState.planArr.map(plan => {
         return html/*syntax:html*/`
           <div class="flex mh2 mv3">
-          
+
             <!-- 左边 -->
             <div class="w-20 " style="font-size: 14px">
               <span>${plan.name}</span>
             </div>
-        
+
             <!-- 右部 -->
             <div class="w-80 flex flex-column">
               <!-- 日期 -->
@@ -136,7 +136,7 @@ const SomeComponent = (_ => {
 
 	  function handleClick () {
 		localState.count += 1
-		emitter.emit('render') 
+		emitter.emit('render')
 	  }
 
 	  return html/*syntax:html*/`
@@ -204,7 +204,7 @@ function Statistics () {
         <span class="w-25">${scoreWeekCountBy(0)}</span>
         <span class="w-25">${scoreWeekCountBy(-1)}</span>
       </div>
-      
+
     </section>
   `
 }
@@ -212,75 +212,59 @@ function Statistics () {
 // 新增计划按钮
 function AddMore () {
 
-  function toggleModalShow (e) {
-    e.preventDefault()
-    dom('#add-more-modal').toggleClass('active')
-  }
-
   return html/*syntax:html*/`
     <section class="">
-
-      <!-- button -->
-      <button type="text" onclick=${toggleModalShow} class="btn btn-primary btn-lg btn-block">增加新的计划</button>
-	  ${AddPlanModal({ toggleModalShow })}
+      <button type="text" id="show-add-plan-modal-btn" class="btn btn-primary btn-lg btn-block">增加新的计划</button>
+	    ${AddPlanModal()}
     </section>
   `
 }
 
-function AddPlanModal (props) {
+function AddPlanModal () {
 	function handleAddPlanFormSubmit(){
 		const body = form2json(document.querySelector('#add-plan-form'))
-		//alert(body['plan-name'])
 		validator.notNull(body['plan-name'], '计划名称')
-		pageState.planArr.push({ name: body['plan-name'], scores: [] })
+		pageState.planArr.push({ name: body['plan-name'], scores: [0,0,1,1,0,-1,1] })
 		emitter.emit('render')
 	}
-	return html`	
-      <!-- modal -->
-	  <section class="modal" id="add-more-modal">
-        <a href="#close" class="modal-overlay" aria-label="Close" onclick=${props.toggleModalShow}></a>
-        <div class="modal-container">
-          <div class="modal-header">
-            <a href="#close" class="btn btn-clear float-right" onclick=${props.toggleModalShow} aria-label="Close"></a>
-            <div class="modal-title f5">添加新计划</div>
-          </div>
-          <div class="modal-body">
-            <div class="content">
-				<form id="add-plan-form" class="form-horizontal">
-					<div class="form-group"> 
-						<div class="col-3 col-sm-12"> 
-							<label class="form-label" for="input-example-1">计划名称</label> 
-						</div> 
-						<div class="col-9 col-sm-12"> 
-							<input class="form-input" type="text" name="plan-name" placeholder="请输入计划名称"> 
-						</div> 
-					</div>
-					<div class="form-group"> 
-						<div class="col-3 col-sm-12"> 
-							<label class="form-label" for="plan-stime">开始时间</label> 
-						</div> 
-						<div class="col-9 col-sm-12"> 
-							<input class="form-input" type="time" step="5" name="plan-stime" placeholder="Name"> 
-						</div> 
-					</div>
-					<div class="form-group"> 
-						<div class="col-3 col-sm-12"> 
-							<label class="form-label" for="plan-etime">结束时间</label> 
-						</div>
-						<div class="col-9 col-sm-12"> 
-							<input class="form-input" type="time" step="5" name="plan-etime" placeholder="Name"> 
-						</div> 
-					</div>
-				</form>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button class="btn mr2" onclick=${props.toggleModalShow}>取消</button>
-            <button class="btn btn-primary" onclick=${handleAddPlanFormSubmit}>确定</button>
-          </div>
+
+  const formEl = html`
+    <form id="add-plan-form" class="form-horizontal">
+
+      <div class="form-group">
+        <div class="col-3 col-sm-12">
+          <label class="form-label" for="input-example-1">计划名称</label>
         </div>
-      </section>
-	`
+        <div class="col-9 col-sm-12">
+          <input class="form-input" type="text" name="plan-name" placeholder="请输入计划名称">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-3 col-sm-12">
+          <label class="form-label" for="plan-stime">开始时间</label>
+        </div>
+        <div class="col-9 col-sm-12">
+          <input class="form-input" type="time" step="5" name="plan-stime" placeholder="Name">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-3 col-sm-12">
+          <label class="form-label" for="plan-etime">结束时间</label>
+        </div>
+        <div class="col-9 col-sm-12">
+          <input class="form-input" type="time" step="5" name="plan-etime" placeholder="Name">
+        </div>
+      </div>
+    </form>
+`
+  return Modal({
+    activeEl:  '#show-add-plan-modal-btn',
+    title:     '添加新计划',
+    contentEl: formEl,
+    onOk:      handleAddPlanFormSubmit,
+  })
 }
 
 // 脚
@@ -296,7 +280,7 @@ function Footer () {
 // 主View
 function Main (/*globalState*/) {
 
-  console.log('home mounted!') 
+  console.log('home mounted!')
   emitter.emit('DOMTitleChange', '首页')
 
   return html/*syntax:html*/`

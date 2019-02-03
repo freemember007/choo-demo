@@ -7,7 +7,6 @@
   </head>
 
   <body>
-    <div id="app"></div>
   </body>
 
   <script type="text/javascript">
@@ -15,7 +14,8 @@
       var TEST_ENV = window.location.href.match(/-test|localhost/)
       //测试环境使用调试脚本
       if(TEST_ENV) {
-		  new VConsole()
+		  //new VConsole()
+		  window.onerror = msg => alert(msg)
       }
     })(window)
   </script>

@@ -26,6 +26,7 @@
     "htmlform2json": "^1.0.0",
     "is-loading": "^2.0.4",
     "lodash": "^4.17.11",
+    "mockjs": "^1.0.1-beta3",
     "nanomorph": "^5.2.0",
     "sheetify": "^7.3.3",
     "spectre.css": "^0.5.8",

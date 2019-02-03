@@ -23,17 +23,16 @@ if (process.env.NODE_ENV !== 'production') {
 } else {
   app.use(require('choo-service-worker')())
 }
-
 // wrapper
 app.use((globalState, emitter) => {
   globalState.someAttr = 'someAttr' 
   emitter.on('DOMContentLoaded', function () {
 	  //const webConsole = new WebConsole()
 	  //@todo: change alert to toast 
-	  window.onerror = (msg, url, line) => {
+//	  window.onerror = (msg, url, line) => {
 		//alert(JSON.stringify({msg, url, line})) 
-		alert(msg)
-	  }
+//		alert(msg)
+//	  }
   })
 })
 root.emitter = app.emitter //@todo: 各页面自己require

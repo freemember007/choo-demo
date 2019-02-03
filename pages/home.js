@@ -2,18 +2,25 @@
  * 首页
  */
 const html = require('choo/html')
+const raw = require('choo/html/raw')
 const request = require('../utils/request')
 const dayjs = require('dayjs')
 const dom = require('dom')
 const root = require('window-or-global')
 const form2json = require('htmlform2json').default
 const validator = require('../utils/validator')
+const flatten = require('lodash/fp/flatten')
 
 // state
 const pageState = {
   count: 0,
   users: '',
-  planArr: ['七点起床', '洗脸刷牙', '去学校', '九点上床'],
+  planArr: [
+	{name: '七点起床',scores: [null, null, 0, -1, 0, 0, 0]},
+	{name: '洗脸刷牙',scores: [-1, 0, 0, -1, 0, 0, 1]},
+	{name: '去学校',scores: [0, 0, 1, 0, 0, 0, 0]},
+	{name: '九点上床',scores: [0, 0, 0, 1, 1, 0, -1]},
+  ],
 }
 
 // actions
@@ -77,25 +84,31 @@ function TableHeader () {
 // 表格
 function TableGrid () {
 
+  function score2flower (score) {
+	if(score === null || score === undefined) return ' '
+	const iconId = score === 1 ? 1 : score === 0 ? 2 : 3
+	return raw(`<img width="24px" height="24px" src="./assets/md-flower-${iconId}.png"/>`)
+  }
+
   return html/*syntax:html*/`
     <section class="">
 
-      ${pageState.planArr.map(name => {
+      ${pageState.planArr.map(plan => {
         return html/*syntax:html*/`
           <div class="flex mh2 mv3">
           
             <!-- 左边 -->
-            <div class="w-20 mr1" style="font-size: 14px">
-              <span>${name}</span>
+            <div class="w-20 " style="font-size: 14px">
+              <span>${plan.name}</span>
             </div>
         
             <!-- 右部 -->
             <div class="w-80 flex flex-column">
               <!-- 日期 -->
               <div class="w-100 flex justify-between">
-                ${[1,2,3,4,5,6,7].map(i => html/*syntax:html*/`
-                  <span class="bb b--black-20 pa2">
-                    ${''}
+                ${plan.scores.map(score => html/*syntax:html*/`
+                  <span class="bb b--black-20 ">
+					${score2flower(score)}
                   </span>
                 `)}
               </div>
@@ -153,13 +166,25 @@ const SomeComponent = (_ => {
 // 统计
 function Statistics () {
 
+	function scoreWeekCountBy(num) {
+		const arr = flatten(pageState.planArr.map(i => i.scores))
+		return arr.filter(i => i === num).length
+	}
+
+	function scoreTodayCountBy(num) {
+		const day = new Date().getDay()
+		const dayIdx = day === 0 ? 6 : day - 1
+		const arr = pageState.planArr.map(i => i.scores[dayIdx])
+		return arr.filter(i => i === num).length
+	}
+
   return html/*syntax:html*/`
     <section class="mv3 ">
 
       <!-- 花朵 -->
       <div class="flex w-100 pa1 justify-between tc">
         <span class="w-25"> </span>
-        <div class="w-25"><img width="50px" height="50px" src="./assets/md-flower.png"/></div>
+        <div class="w-25"><img width="50px" height="50px" src="./assets/md-flower-1.png"/></div>
         <div class="w-25"><img width="50px" height="50px" src="./assets/md-flower-2.png"/></div>
         <div class="w-25"><img width="50px" height="50px" src="./assets/md-flower-3.png"/></div>
       </div>
@@ -167,17 +192,17 @@ function Statistics () {
       <!-- 当日统计 -->
       <div class="flex w-100 pa1 justify-between tc">
         <span class="w-25">当日统计</span>
-        <span class="w-25">0</span>
-        <span class="w-25">0</span>
-        <span class="w-25">0</span>
+        <span class="w-25">${scoreTodayCountBy(1)}</span>
+        <span class="w-25">${scoreTodayCountBy(0)}</span>
+        <span class="w-25">${scoreTodayCountBy(-1)}</span>
       </div>
 
       <!-- 本周统计 -->
       <div class="flex w-100 pa1 justify-between tc">
         <span class="w-25">本周统计</span>
-        <span class="w-25">1</span>
-        <span class="w-25">1</span>
-        <span class="w-25">1</span>
+        <span class="w-25">${scoreWeekCountBy(1)}</span>
+        <span class="w-25">${scoreWeekCountBy(0)}</span>
+        <span class="w-25">${scoreWeekCountBy(-1)}</span>
       </div>
       
     </section>
@@ -185,7 +210,7 @@ function Statistics () {
 }
 
 // 新增计划按钮
-function AddMoreBtn () {
+function AddMore () {
 
   function toggleModalShow (e) {
     e.preventDefault()
@@ -207,7 +232,7 @@ function AddPlanModal (props) {
 		const body = form2json(document.querySelector('#add-plan-form'))
 		//alert(body['plan-name'])
 		validator.notNull(body['plan-name'], '计划名称')
-		pageState.planArr.push(body['plan-name'])
+		pageState.planArr.push({ name: body['plan-name'], scores: [] })
 		emitter.emit('render')
 	}
 	return html`	
@@ -281,7 +306,7 @@ function Main (/*globalState*/) {
         ${TableHeader()}
         ${TableGrid()}
         ${Statistics()}
-        ${AddMoreBtn()}
+        ${AddMore()}
         ${Footer()}
       </main>
     </body>

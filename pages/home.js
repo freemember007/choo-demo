@@ -1,25 +1,24 @@
 /*
  * 首页
  */
-const html = require('choo/html')
-const request = require('../utils/request')
-const dayjs = require('dayjs')
-const dom = require('dom')
-const root = require('window-or-global')
+const html      = require('choo/html')
+const request   = require('../utils/request')
+const dayjs     = require('dayjs')
+const dom       = require('dom')
+const root      = require('window-or-global')
 const form2json = require('htmlform2json').default
 const validator = require('../utils/validator')
-const flatten = require('lodash/fp/flatten')
-const Modal = require('../components/Modal')
+const flatten   = require('lodash/fp/flatten')
+const Modal     = require('../components/Modal')
 
 // state
 const pageState = {
-  count: 0,
-  users: '',
-  planArr: [
-	{name: '七点起床',scores: [1, 1, 0, -1, 0, 0, 0]},
-	{name: '洗脸刷牙',scores: [-1, 0, 0, -1, 0, 0, 1]},
-	{name: '去学校',scores: [0, 0, 1, 0, 0, 0, 0]},
-	{name: '九点上床',scores: [0, 0, 0, 1, 1, 0, -1]},
+  users: '', //just for test
+  planList: [
+    {name: '七点起床', scores: [1, 1, 0, -1, 0, 0, 0]},
+    {name: '洗脸刷牙', scores: [-1, 0, 0, -1, 0, 0, 1]},
+    {name: '去学校',   scores: [0, 0, 1, 0, 0, 0, 0]},
+    {name: '九点上床', scores: [0, 0, 0, 1, 1, 0, -1]},
   ],
 }
 
@@ -38,10 +37,7 @@ function Header () {
     <div class="w-100 pa3 tc f4 bb b--black-30">
       ${today}
     </div >
-<!--     <button class="btn badge" data-badge="8">
-      Button
-    </button>
- -->  `
+  `
 }
 
 // 表头
@@ -84,16 +80,56 @@ function TableHeader () {
 // 表格
 function TableGrid () {
 
+  const localState = {
+    choosedPlanIdx: null,
+    choosedDateIdx: null,
+    choosedScore: null,
+  }
+
   function score2flower (score) {
-	if(score === null || score === undefined) return ' '
-	const iconId = score === 1 ? 1 : score === 0 ? 2 : 3
-	return html`<img width="24px" height="24px" src="./assets/md-flower-${iconId}.png"/>`
+    if(score === null || score === undefined) return ' '
+    const iconId = score === 1 ? 1 : score === 0 ? 2 : 3
+    return html`<img width="24px" height="24px" src="./assets/md-flower-${iconId}.png"/>`
+  }
+
+  function handleGridClick(planIdx, dateIdx){
+    localState.choosedPlanIdx = planIdx
+    localState.choosedDateIdx = dateIdx
+  }
+
+  // changeScoreModal
+  function changeScoreModal (props) {
+
+    function handleChooseScore (score) {
+      localState.choosedScore = score
+    }
+
+    function handleChangeScore(){
+      pageState.planList[localState.choosedPlanIdx].scores[localState.choosedDateIdx] = localState.choosedScore
+      emitter.emit('render')
+    }
+
+    const form$ = html`
+    <div class="flex justify-between">
+      <img width="24px" height="24px" src="./assets/md-flower-1.png" onclick=${() => handleChooseScore(1)}/>
+        <img width="24px" height="24px" src="./assets/md-flower-2.png" onclick=${() => handleChooseScore(0)}/>
+        <img width="24px" height="24px" src="./assets/md-flower-3.png" onclick=${() => handleChooseScore(-1)}/>
+      </div>
+    `
+
+    return Modal({
+      size:      'sm',
+      activeEl:  `.table-grid`,
+      title:     '请选择分数',
+      contentEl: form$,
+      onOk:      handleChangeScore,
+    })
   }
 
   return html/*syntax:html*/`
     <section class="">
 
-      ${pageState.planArr.map(plan => {
+      ${pageState.planList.map((plan, planIdx) => {
         return html/*syntax:html*/`
           <div class="flex mh2 mv3">
 
@@ -106,9 +142,9 @@ function TableGrid () {
             <div class="w-80 flex flex-column">
               <!-- 日期 -->
               <div class="w-100 flex justify-between">
-                ${plan.scores.map(score => html/*syntax:html*/`
-                  <span class="bb b--black-20 ">
-					${score2flower(score)}
+                ${plan.scores.map((score, dateIdx) => html/*syntax:html*/`
+                  <span class="table-grid bb b--black-20 " onclick=${_ => handleGridClick(planIdx, dateIdx)}>
+                    ${score2flower(score)}
                   </span>
                 `)}
               </div>
@@ -117,9 +153,11 @@ function TableGrid () {
           </div>
         `
       })}
+      ${changeScoreModal()}
     </section>
   `
 }
+
 
 // 元件A
 const SomeComponent = (_ => {
@@ -167,14 +205,14 @@ const SomeComponent = (_ => {
 function Statistics () {
 
 	function scoreWeekCountBy(num) {
-		const arr = flatten(pageState.planArr.map(i => i.scores))
+		const arr = flatten(pageState.planList.map(i => i.scores))
 		return arr.filter(i => i === num).length
 	}
 
 	function scoreTodayCountBy(num) {
 		const day = new Date().getDay()
 		const dayIdx = day === 0 ? 6 : day - 1
-		const arr = pageState.planArr.map(i => i.scores[dayIdx])
+		const arr = pageState.planList.map(i => i.scores[dayIdx])
 		return arr.filter(i => i === num).length
 	}
 
@@ -224,11 +262,11 @@ function AddPlanModal () {
 	function handleAddPlanFormSubmit(){
 		const body = form2json(document.querySelector('#add-plan-form'))
 		validator.notNull(body['plan-name'], '计划名称')
-		pageState.planArr.push({ name: body['plan-name'], scores: [0,0,1,1,0,-1,1] })
+		pageState.planList.push({ name: body['plan-name'], scores: [0,0,1,1,0,-1,1] })
 		emitter.emit('render')
 	}
 
-  const formEl = html`
+  const form$ = html`
     <form id="add-plan-form" class="form-horizontal">
 
       <div class="form-group">
@@ -262,7 +300,7 @@ function AddPlanModal () {
   return Modal({
     activeEl:  '#show-add-plan-modal-btn',
     title:     '添加新计划',
-    contentEl: formEl,
+    contentEl: form$,
     onOk:      handleAddPlanFormSubmit,
   })
 }

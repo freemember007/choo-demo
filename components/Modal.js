@@ -18,7 +18,7 @@ function Modal (props) {
   })
 
   return html`
-    <section class="modal" id="modal-${randomId}">
+    <section class="modal modal-${props.size}" id="modal-${randomId}">
 
       <!-- mask -->
       <a href="javascript:" class="modal-overlay" aria-label="Close" onclick=${toggleModalShow}></a>

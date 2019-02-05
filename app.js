@@ -13,6 +13,7 @@ css('tachyons')
 //css('./assets/base.styl')
 //css('./node_modules/bootstrap/dist/css/bootstrap.min.css')
 css('./node_modules/spectre.css/dist/spectre.css')
+css('./node_modules/spectre.css/dist/spectre-icons.css')
 
 
 const app = choo()
@@ -25,12 +26,12 @@ if (process.env.NODE_ENV !== 'production') {
 }
 // wrapper
 app.use((globalState, emitter) => {
-  globalState.someAttr = 'someAttr' 
+  globalState.someAttr = 'someAttr'
   emitter.on('DOMContentLoaded', function () {
 	  //const webConsole = new WebConsole()
-	  //@todo: change alert to toast 
+	  //@todo: change alert to toast
 //	  window.onerror = (msg, url, line) => {
-		//alert(JSON.stringify({msg, url, line})) 
+		//alert(JSON.stringify({msg, url, line}))
 //		alert(msg)
 //	  }
   })
@@ -40,7 +41,7 @@ root.emitter = app.emitter //@todo: 各页面自己require
 
 // route
 app.route('/', require('./pages/home'))
-app.route('/about', require('./pages/about'))
+app.route('/my', require('./pages/my'))
 app.route('/login', require('./pages/login'))
 app.route('/signup', require('./pages/signup'))
 app.route('/*', require('./pages/404'))

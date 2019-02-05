@@ -10,6 +10,7 @@ const form2json = require('htmlform2json').default
 const validator = require('../utils/validator')
 const flatten   = require('lodash/fp/flatten')
 const Modal     = require('../components/Modal')
+const Tabs     = require('../components/Tabs')
 
 // state
 const pageState = {
@@ -330,6 +331,7 @@ function Main (/*globalState*/) {
         ${Statistics()}
         ${AddMore()}
         ${Footer()}
+        ${Tabs({ currentTab: 'plan'})}
       </main>
     </body>
   `

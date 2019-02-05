@@ -1,13 +1,13 @@
 /*
- * 关于
+ * my
  */
 
 const html = require('choo/html')
-
+const Tabs = require('../components/Tabs')
 
 function Main () {
 
-  emitter.emit('DOMTitleChange', '关于')
+  emitter.emit('DOMTitleChange', '我的')
 
   return html/*syntax:html*/`
     <body>
@@ -16,6 +16,7 @@ function Main () {
         <p>测试文字2</p>
         <p>测试文字3</p>
         <a href="/">[回首页]</a>
+        ${Tabs({ currentTab: 'my'})}
       </main>
     </body>
   `

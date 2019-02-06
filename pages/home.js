@@ -331,8 +331,8 @@ function Main (/*globalState*/) {
         ${Statistics()}
         ${AddMore()}
         ${Footer()}
-        ${Tabs({ currentTab: 'plan'})}
       </main>
+      ${Tabs({ currentTab: '/'})}
     </body>
   `
 }

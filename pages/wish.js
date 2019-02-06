@@ -7,7 +7,7 @@ const Tabs = require('../components/Tabs')
 
 function Main () {
 
-  emitter.emit('DOMTitleChange', '我的')
+  emitter.emit('DOMTitleChange', '愿望')
 
   return html/*syntax:html*/`
     <body>
@@ -17,7 +17,7 @@ function Main () {
         <p>测试文字3</p>
         <a href="/">[回首页]</a>
       </main>
-      ${Tabs({ currentTab: 'my'})}
+      ${Tabs({ currentTab: 'wish'})}
     </body>
   `
 }

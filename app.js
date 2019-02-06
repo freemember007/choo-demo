@@ -42,6 +42,7 @@ root.emitter = app.emitter //@todo: 各页面自己require
 // route
 app.route('/', require('./pages/home'))
 app.route('/my', require('./pages/my'))
+app.route('/wish', require('./pages/wish'))
 app.route('/login', require('./pages/login'))
 app.route('/signup', require('./pages/signup'))
 app.route('/*', require('./pages/404'))

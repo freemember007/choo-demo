@@ -6,6 +6,7 @@ const request = require('../utils/request')
 const form2json = require('htmlform2json').default
 const validator = require('../utils/validator')
 const isLoading = require('is-loading')
+const NavBar = require('../components/NavBar')
 
 // 头
 function Header () {
@@ -32,7 +33,7 @@ function SignupForm () {
 
     // 提交中...
     const button$ = document.querySelector('#signup-button')
-    const loader$ = isLoading(button$, { 
+    const loader$ = isLoading(button$, {
       text: '提交中...',
       disableList: [document.querySelector('#username')] //@todo: 一次选取多个
     })
@@ -85,6 +86,7 @@ function Main () {
 
   return html/*syntax:html*/`
     <body>
+      ${NavBar({ title: '注册', hasBack: true})}
       <main class="pa3 cf center">
         ${Header()}
         ${SignupForm()}

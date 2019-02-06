@@ -11,7 +11,7 @@ function Tabs (props) {
     <section class="fixed w-100 bottom-0 bg-gray flex justify-arround gray"
          style="height: 55px" >
 
-         <div class="w-33 pv1 flex flex-column justify-around items-center ${props.currentTab==='/' && 'text-primary'}" onclick=${_=>jumpTo('/')}>
+      <div class="w-33 pv1 flex flex-column justify-around items-center ${props.currentTab==='/' && 'text-primary'}" onclick=${_=>jumpTo('/')}>
         <i class="icon icon-flag"></i>
         <span class="f7">计划</span>
       </div>

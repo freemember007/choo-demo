@@ -1,9 +1,9 @@
 /*
  * my
  */
-
 const html = require('choo/html')
 const Tabs = require('../components/Tabs')
+const NavBar = require('../components/NavBar')
 
 function Main () {
 
@@ -11,7 +11,8 @@ function Main () {
 
   return html/*syntax:html*/`
     <body>
-      <main class="pa3 cf center">
+      ${NavBar()}
+      <main class="pa1 cf center" style="margin:55px 0">
         <p>测试文字1</p>
         <p>测试文字2</p>
         <p>测试文字3</p>

@@ -10,7 +10,8 @@ const form2json = require('htmlform2json').default
 const validator = require('../utils/validator')
 const flatten   = require('lodash/fp/flatten')
 const Modal     = require('../components/Modal')
-const Tabs     = require('../components/Tabs')
+const NavBar    = require('../components/NavBar')
+const Tabs      = require('../components/Tabs')
 
 // state
 const pageState = {
@@ -35,7 +36,7 @@ function Header () {
   const today = dayjs().format('YYYY年MM月DD日')
 
   return html/*syntax:html*/`
-    <div class="w-100 pa3 tc f4 bb b--black-30">
+    <div class="w-100 pa1 tc f4 bb b--black-30">
       ${today}
     </div >
   `
@@ -324,7 +325,8 @@ function Main (/*globalState*/) {
 
   return html/*syntax:html*/`
     <body class="code lh-copy">
-      <main class="pa1 cf center">
+      ${NavBar({ title: '首页'})}
+      <main class="pa1 cf center" style="margin:55px 0">
         ${Header()}
         ${TableHeader()}
         ${TableGrid()}

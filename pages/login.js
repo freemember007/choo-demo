@@ -8,6 +8,7 @@ const form2json = require('htmlform2json').default
 const validator = require('../utils/validator')
 const isLoading = require('is-loading')
 const dom = require('dom')
+const NavBar = require('../components/NavBar')
 
 
 // 头
@@ -33,7 +34,7 @@ function LoignForm () {
 
     // 提交中...
     const button$ = document.querySelector('#login-button')
-    const loader$ = isLoading(button$, { 
+    const loader$ = isLoading(button$, {
       text: '提交中...',
       disableList: [
         document.querySelector('#username'),
@@ -87,7 +88,8 @@ function Main (/*globalState*/) {
 
   return html/*syntax:html*/`
     <body>
-      <main class="pa3 cf center">
+      ${NavBar({ title: '登录', hasBack: true})}
+      <main class="cf center">
         ${Header()}
         ${LoignForm()}
         ${Footer()}

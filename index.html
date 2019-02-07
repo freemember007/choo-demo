@@ -3,6 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <link rel="stylesheet" href="./assets/show-js-error.css" />
+    <script src="./assets/show-js-error.js"></script>
     <script type="text/javascript" src="./assets/vconsole.min.js"></script>
   </head>
 
@@ -14,8 +16,14 @@
       var TEST_ENV = window.location.href.match(/-test|localhost/)
       //测试环境使用调试脚本
       if(TEST_ENV) {
+          showJSError.init({
+              title: 'JavaScript error',
+              userAgent: navigator.userAgent,
+              sendText: 'Send 🐛',
+              sendUrl: 'https://github.com/hcodes/show-js-error/issues/new?title={title}&body={body}'
+          })
 		  //new VConsole()
-		  window.onerror = msg => alert(msg)
+		  //window.onerror = msg => alert(msg)
       }
     })(window)
   </script>

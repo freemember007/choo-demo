@@ -7,7 +7,6 @@ const TabBar = require('../components/TabBar')
 const NavBar = require('../components/NavBar')
 
 function Main () {
-
   emitter.emit('DOMTitleChange', '心愿')
 
   return html/*syntax:html*/`

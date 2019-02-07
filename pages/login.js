@@ -9,6 +9,7 @@ const validator = require('../utils/validator')
 const isLoading = require('is-loading')
 const dom = require('dom')
 const NavBar = require('../components/NavBar')
+const TabBar = require('../components/TabBar')
 
 
 // 表单
@@ -83,6 +84,7 @@ function Main (/*globalState*/) {
         ${LoignForm()}
         ${Footer()}
       </main>
+      ${TabBar()}
     </body>
   `
 }

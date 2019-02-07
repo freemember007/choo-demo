@@ -10,8 +10,8 @@ const reload = require('choo-reload')
 
 // css
 css('tachyons')
-//css('./assets/base.styl')
 //css('./node_modules/bootstrap/dist/css/bootstrap.min.css')
+css('./node_modules/vant/lib/index.css')
 css('./node_modules/spectre.css/dist/spectre.css')
 css('./node_modules/spectre.css/dist/spectre-icons.css')
 

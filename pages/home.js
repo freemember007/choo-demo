@@ -11,7 +11,7 @@ const validator = require('../utils/validator')
 const flatten   = require('lodash/fp/flatten')
 const Modal     = require('../components/Modal')
 const NavBar    = require('../components/NavBar')
-const Tabs      = require('../components/Tabs')
+const TabBar      = require('../components/TabBar')
 
 // state
 const pageState = {
@@ -326,7 +326,7 @@ function Main (/*globalState*/) {
   return html/*syntax:html*/`
     <body class="code lh-copy">
       ${NavBar({ title: '首页'})}
-      <main class="pa1 cf center" style="margin:55px 0">
+      <main class="pa1 cf center" style="margin-bottom:50px">
         ${Header()}
         ${TableHeader()}
         ${TableGrid()}
@@ -334,7 +334,7 @@ function Main (/*globalState*/) {
         ${AddMore()}
         ${Footer()}
       </main>
-      ${Tabs({ currentTab: '/'})}
+      ${TabBar({ currentTab: 'home'})}
     </body>
   `
 }

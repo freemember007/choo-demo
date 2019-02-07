@@ -9,16 +9,20 @@ function NavBar (props) {
 
   return html`
 
-   <section class="fixed w-100 top-0 bg-gray flex items-center" style="height: 55px" >
-     <div class="w-20 pa3" onclick=${back}>
-        ${props.hasBack && html`<i class="icon icon-back f1"></i>`}
-      </div>
+    <section class="van-nav-bar van-hairline--bottom" style=z-index:1>
 
-      <div class="w-60 tc f4">
+      ${props.hasBack && html`
+        <div class=van-nav-bar__left onclick=${back}>
+          <i class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i>
+          <span class=van-nav-bar__text>返回</span>
+        </div>`}
+
+      <div class="van-nav-bar__title van-ellipsis">
         ${props.title}
       </div>
 
-      <div class="w-20">
+      <div class=van-nav-bar__right>
+        ${props.rightBtn}
       </div>
 
     </section>

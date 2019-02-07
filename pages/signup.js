@@ -8,16 +8,6 @@ const validator = require('../utils/validator')
 const isLoading = require('is-loading')
 const NavBar = require('../components/NavBar')
 
-// 头
-function Header () {
-
-  return html/*syntax:html*/`
-    <section class="container tc">
-      <h1>注册</h1>
-    </section>
-  `
-}
-
 // 表单
 function SignupForm () {
 
@@ -87,8 +77,7 @@ function Main () {
   return html/*syntax:html*/`
     <body>
       ${NavBar({ title: '注册', hasBack: true})}
-      <main class="pa3 cf center">
-        ${Header()}
+      <main class="pa3 cf center" style="margin:55px 0">
         ${SignupForm()}
         ${Footer()}
       </main>

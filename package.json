@@ -34,6 +34,7 @@
     "superagent": "^4.1.0",
     "superagent-use": "^0.1.0",
     "tachyons": "^4.11.1",
+    "vant": "^1.6.1",
     "vconsole": "^3.2.2",
     "window-or-global": "^1.0.1",
     "yo-yo": "^1.4.1"

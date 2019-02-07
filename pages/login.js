@@ -11,16 +11,6 @@ const dom = require('dom')
 const NavBar = require('../components/NavBar')
 
 
-// 头
-function Header () {
-
-  return html/*syntax:html*/`
-    <section class="container tc">
-      <h1>登录</h1>
-    </section>
-  `
-}
-
 // 表单
 function LoignForm () {
 
@@ -89,8 +79,7 @@ function Main (/*globalState*/) {
   return html/*syntax:html*/`
     <body>
       ${NavBar({ title: '登录', hasBack: true})}
-      <main class="cf center">
-        ${Header()}
+      <main class="pa3 cf center" style="margin:55px 0">
         ${LoignForm()}
         ${Footer()}
       </main>

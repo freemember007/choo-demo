@@ -10,6 +10,7 @@ const form2json = require('htmlform2json').default
 const validator = require('../utils/validator')
 const flatten   = require('lodash/fp/flatten')
 const Modal     = require('../components/Modal')
+const Dialog     = require('../components/Dialog')
 const NavBar    = require('../components/NavBar')
 const TabBar      = require('../components/TabBar')
 
@@ -268,7 +269,7 @@ function AddPlanModal () {
 		emitter.emit('render')
 	}
 
-  const form$ = html`
+  const form$ = html /*syntax:html*/`
     <form id="add-plan-form" class="form-horizontal">
 
       <div class="form-group">
@@ -299,12 +300,19 @@ function AddPlanModal () {
       </div>
     </form>
 `
-  return Modal({
+  // return Modal({
+  //   activeEl:  '#show-add-plan-modal-btn',
+  //   title:     '添加新计划',
+  //   contentEl: form$,
+  //   onOk:      handleAddPlanFormSubmit,
+  // })
+  return Dialog({
     activeEl:  '#show-add-plan-modal-btn',
     title:     '添加新计划',
-    contentEl: form$,
+    // contentEl: form$,
     onOk:      handleAddPlanFormSubmit,
   })
+
 }
 
 // 脚

@@ -71,7 +71,7 @@ function Dialog (props = {}) {
       </div>
 
       <!-- mask -->
-      <div class="van-overlay" style="z-index: 2036;"></div>
+      <div class="van-overlay" onclick=${toggleModalShow} style="z-index: 2036;"></div>
     </section>
   `
 }

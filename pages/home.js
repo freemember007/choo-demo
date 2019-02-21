@@ -13,6 +13,7 @@ const Modal     = require('../components/Modal')
 const Dialog     = require('../components/Dialog')
 const NavBar    = require('../components/NavBar')
 const TabBar      = require('../components/TabBar')
+const { TNG, useState, useEffect, useRef } = require("tng-hooks")
 
 // state
 const pageState = {
@@ -163,46 +164,71 @@ function TableGrid () {
 
 
 // 元件A
-const SomeComponent = (_ => {
+const SomeComponent1 = (_ => {
+  let localState = {
+    count: 0
+  }
+  return function SomeComponent1 () {
+    if(!pageState.users) getUsers().then(data => {
+      pageState.users = data
+      emitter.emit('render')
+    })
 
-	let localState = {
-		count: 0
-	}
-	return function SomeComponent () {
+    function handleClick () {
+      localState.count += 1
+      emitter.emit('render')
+    }
 
-	  if(!pageState.users) getUsers().then(data => {
-		  pageState.users = data
-		  emitter.emit('render')
-		})
+    return html/*syntax:html*/`
+      <section class="pa3">
+        <p class="someStyle">${pageState.users}</p>
+        <p>Number of clicks stored: ${localState.count}</p>
+        <button class="btn btn-primary"onclick=${handleClick}>
+          Emit a click event
+        </button>
+        <style type="text/css">
+          .someStyle {
+            color: red;
+          }
+        </style>
+      </section>
+    `
+  }
+})()
 
-	  function handleClick () {
-		localState.count += 1
-		emitter.emit('render')
-	  }
+// 尝试TNG-hooks, useState/useRef均可
+SomeComponent2 = TNG(SomeComponent2)
+function SomeComponent2 () {
+  const count = useRef(0)
 
-	  return html/*syntax:html*/`
-		<style type="text/css">
-		  .someStyle {
-			padding: 5px;
-		  }
-		</style>
+  // oncreate
+  useEffect(() => {
+    getUsers().then(data => {
+      pageState.users = data
+      emitter.emit('render')
+    })
+  }, [])
 
-		<section class="pa3">
-		  <p>${pageState.users}</p>
-		  <p>Number of clicks stored: ${localState.count}</p>
+  function handleClick () {
+    count.current ++
+    emitter.emit('render')
+  }
 
-		  <button class="btn btn-primary"onclick=${handleClick}>
-			Emit a click event
-		  </button>
-
-		  <a href="/about">关于我们</a>
-		</section>
-	  `
-	}
-
-})(root)
-
-
+  return html/*syntax:html*/`
+    <section class="pa3">
+      <p class="someStyle">${pageState.users}</p>
+      <p>Number of clicks stored: ${count.current}</p>
+      <button class="btn btn-primary" onclick=${handleClick}>
+        Emit a click event
+      </button>
+      <style type="text/css">
+        .someStyle {
+          color: red;
+        }
+      </style>
+    </section>
+  `
+}
 
 // 统计
 function Statistics () {
@@ -221,7 +247,6 @@ function Statistics () {
 
   return html/*syntax:html*/`
     <section class="mv3 ">
-
       <!-- 花朵 -->
       <div class="flex w-100 pa1 justify-between tc">
         <span class="w-25"> </span>
@@ -245,7 +270,6 @@ function Statistics () {
         <span class="w-25">${scoreWeekCountBy(0)}</span>
         <span class="w-25">${scoreWeekCountBy(-1)}</span>
       </div>
-
     </section>
   `
 }
@@ -340,6 +364,7 @@ function Main (/*globalState*/) {
         ${TableGrid()}
         ${Statistics()}
         ${AddMore()}
+        ${SomeComponent2()}
         ${Footer()}
       </main>
       ${TabBar({ currentTab: 'home'})}

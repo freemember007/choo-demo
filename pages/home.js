@@ -37,7 +37,7 @@ function getUsers (){
 function Header () {
   const today = dayjs().format('YYYY年MM月DD日')
 
-  return html/*syntax:html*/`
+  return html`
     <div class="w-100 pa1 tc f4 bb b--black-30">
       ${today}
     </div >
@@ -49,7 +49,7 @@ function TableHeader () {
   const dateArr = ['09', '10', '11', '12', '13', '14', '15']
   const weekArr = ['一', '二', '三', '四', '五', '六', '日']
 
-  return html/*syntax:html*/`
+  return html`
     <section class="flex ma1 mt3">
 
       <!-- 左边 -->
@@ -61,7 +61,7 @@ function TableHeader () {
       <div class="w-80 flex flex-column">
         <!-- 星期 -->
         <div class="w-100 flex justify-between">
-          ${weekArr.map(week => html/*syntax:html*/`
+          ${weekArr.map(week => html`
             <span class="">
               ${week}
             </span>
@@ -69,7 +69,7 @@ function TableHeader () {
         </div>
         <!-- 日期 -->
         <div class="w-100 flex justify-between">
-          ${dateArr.map(date => html/*syntax:html*/`
+          ${dateArr.map(date => html`
             <span class="">
               ${date}
             </span>
@@ -130,11 +130,11 @@ function TableGrid () {
     })
   }
 
-  return html/*syntax:html*/`
+  return html`
     <section class="">
 
       ${pageState.planList.map((plan, planIdx) => {
-        return html/*syntax:html*/`
+        return html`
           <div class="flex mh2 mv3">
 
             <!-- 左边 -->
@@ -146,7 +146,7 @@ function TableGrid () {
             <div class="w-80 flex flex-column">
               <!-- 日期 -->
               <div class="w-100 flex justify-between">
-                ${plan.scores.map((score, dateIdx) => html/*syntax:html*/`
+                ${plan.scores.map((score, dateIdx) => html`
                   <span class="table-grid bb b--black-20 " onclick=${_ => handleGridClick(planIdx, dateIdx)}>
                     ${score2flower(score)}
                   </span>
@@ -179,7 +179,7 @@ const SomeComponent1 = (_ => {
       emitter.emit('render')
     }
 
-    return html/*syntax:html*/`
+    return html`
       <section class="pa3">
         <p class="someStyle">${pageState.users}</p>
         <p>Number of clicks stored: ${localState.count}</p>
@@ -214,7 +214,7 @@ function SomeComponent2 () {
     emitter.emit('render')
   }
 
-  return html/*syntax:html*/`
+  return html`
     <section class="pa3">
       <p class="someStyle">${pageState.users}</p>
       <p>Number of clicks stored: ${count.current}</p>
@@ -245,7 +245,7 @@ function Statistics () {
 		return arr.filter(i => i === num).length
 	}
 
-  return html/*syntax:html*/`
+  return html`
     <section class="mv3 ">
       <!-- 花朵 -->
       <div class="flex w-100 pa1 justify-between tc">
@@ -277,7 +277,7 @@ function Statistics () {
 // 新增计划按钮
 function AddMore () {
 
-  return html/*syntax:html*/`
+  return html`
     <section class="">
       <button type="text" id="show-add-plan-modal-btn" class="btn btn-primary btn-lg btn-block">增加新的计划</button>
 	    ${AddPlanModal()}
@@ -293,7 +293,7 @@ function AddPlanModal () {
 		emitter.emit('render')
 	}
 
-  const form$ = html /*syntax:html*/`
+  const form$ = html `
     <form id="add-plan-form" class="form-horizontal">
 
       <div class="form-group">
@@ -342,7 +342,7 @@ function AddPlanModal () {
 // 脚
 function Footer () {
 
-  return html/*syntax:html*/`
+  return html`
     <section class="mt3 tr">
       <a href="/login">去登录</a>
     </section>
@@ -355,7 +355,7 @@ function Main (/*globalState*/) {
   console.log('home mounted!')
   emitter.emit('DOMTitleChange', '首页')
 
-  return html/*syntax:html*/`
+  return html`
     <body class="code lh-copy">
       ${NavBar({ title: '首页'})}
       <main class="pa1 cf center" style="margin-bottom:50px">

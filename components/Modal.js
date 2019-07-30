@@ -17,7 +17,7 @@ function Modal (props) {
     dom(props.activeEl).on('click',toggleModalShow)
   })
 
-  return html /*syntax:html*/`
+  return html `
     <section class="modal modal-${props.size}" id="modal-${randomId}">
 
       <!-- mask -->

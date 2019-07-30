@@ -40,7 +40,7 @@ function SignupForm () {
       })
   }
 
-  return html/*syntax:html*/`
+  return html`
     <form id="signup-form" onsubmit=${handleSignupFormSubmit}>
       <div class="form-group">
         <label class="form-label" for="username">用户名</label>
@@ -62,7 +62,7 @@ function SignupForm () {
 // 脚
 function Footer () {
 
-  return html/*syntax:html*/`
+  return html`
     <section class="mt3 tr">
       <a href="/login">去登录</a>
     </section>
@@ -74,7 +74,7 @@ function Main () {
 
   emitter.emit('DOMTitleChange', '注册')
 
-  return html/*syntax:html*/`
+  return html`
     <body>
       ${NavBar({ title: '注册', hasBack: true})}
       <main class="pa3 cf center" style="margin:55px 0">

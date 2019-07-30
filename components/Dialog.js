@@ -18,7 +18,7 @@ function Dialog (props = {}) {
   })
 
 
-  return html/*syntax:html*/`
+  return html`
     <section id="modal-${randomId}" class="dn">
 
       <!-- dialog -->

@@ -44,7 +44,7 @@ function LoignForm () {
       })
   }
 
-  return html/*syntax:html*/`
+  return html`
     <form id="login" onsubmit=${handleLoginFormSubmit}>
 
       <div class="form-group">
@@ -66,7 +66,7 @@ function LoignForm () {
 // 脚
 function Footer () {
 
-  return html/*syntax:html*/`
+  return html`
     <section class="mt3 tr">
       <a href="/signup">去注册</a>
     </section>
@@ -79,7 +79,7 @@ function Main (/*globalState*/) {
 
   emitter.emit('DOMTitleChange', '登录')
 
-  return html/*syntax:html*/`
+  return html`
     <body>
       ${NavBar({ title: '登录', hasBack: true})}
       <main class="pa3 cf center" style="margin:55px 0">

@@ -93,7 +93,7 @@ function Main () {
 
   emitter.emit('DOMTitleChange', '我的')
 
-  return html/*syntax:html*/`
+  return html`
     <body>
       ${NavBar({title:'我的'})}
       ${Cover()}
